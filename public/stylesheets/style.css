@@ -6,3 +6,42 @@ body {
 a {
   color: #00B7FF;
 }
+#mainBody{
+  padding-left: 30px;
+
+}
+#pageHead{
+  background-color: darkseagreen;
+  min-height: 103px;
+}
+#pageTitle{
+  padding-top: 25px;
+
+}
+#toolkit{
+  display: inline-block;
+
+  position:fixed;
+  right:0;
+  top:150px;
+  padding: 40px;
+  margin-right: 12px;
+  border: 2px solid powderblue;
+
+
+}
+.feet{
+  background-color: #00B7FF;
+  min-height: 12px;
+  width:100%;
+}
+
+.blocko{
+  display: inline-block;
+  margin-bottom: 20px;
+}
+body, html{
+  padding: 0;
+  margin: 0;
+
+}

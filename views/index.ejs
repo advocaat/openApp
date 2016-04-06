@@ -2,9 +2,32 @@
 <head>
 <title>Open App</title>
    <meta charset="utf-8">
+   <link href="/stylesheets/style.css" type="text/css" rel="stylesheet">
+   <link href="
+https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet" type="text/css">
+   <script   src="https://code.jquery.com/jquery-2.2.3.js"
+             integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4="
+             crossorigin="anonymous">
+   </script>
+
+
 </head>
 <body>
-<h1>Cunnt!!!</h1>
+<% include partials/header.ejs %>
+<div id="mainBody" class="content-fluid">
+ <%include partials/myContent.ejs %>
+</div>
+<aside>
+   <%include partials/toolkit.ejs%>
+</aside>
+<script>
+   $("#addContent").on("click",function() {
+      var newText = document.createElement("textarea");
+      $(<%include partials/p.txt%>).insertAfter("#title");
+   } )
+
+
+</script>
 
 </body>
 

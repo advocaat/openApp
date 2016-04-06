@@ -1,0 +1,1 @@
+'<div class="blocko"><textarea class="block" rows="5" cols="90"></textarea><footer class="feet" height="10" width="400"></footer></div>'
