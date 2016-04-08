@@ -11,6 +11,7 @@ https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstr
    </script>
 
 
+
 </head>
 <body>
 <% include partials/header.ejs %>
@@ -21,13 +22,26 @@ https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstr
    <%include partials/toolkit.ejs%>
 </aside>
 <script>
+
    $("#addContent").on("click",function() {
       $(<% include partials/p.txt %>).insertAfter("#title");
    } )
 
 
-</script>
+   $("#upload").on("click", function(){
+      var message = "";
+      message += $("#title").val() + "\n";
+      $(".block").each(function(){
+         message += $(this).val() + "\n";
+      })
+      console.log(message);
+      uploadFacebook(message);
+   })
 
+</script>
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script src="javascripts/fbLogin.js"></script>
 </body>
 
 

@@ -7,6 +7,10 @@ var bodyParser = require('body-parser');
 var dbConnect = require('./control/dbConnect')
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var DAO = require('./DAO');
+
+DAO.uploadPost("TITIES", [{myContent: "hello helo heo", myMeta: "purple"},
+  {myContent: "Goodbye", myMeta: "orange"}]);
 
 var app = express();
 dbConnect.open();
