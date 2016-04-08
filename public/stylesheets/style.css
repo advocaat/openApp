@@ -2,7 +2,10 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+.clearBack {
+  background:transparent;
 
+}
 a {
   color: #00B7FF;
 }
@@ -13,11 +16,22 @@ a {
 #pageHead{
   background-color: darkseagreen;
   min-height: 103px;
-}
-#pageTitle{
-  padding-top: 25px;
 
 }
+.centerTable{
+  display: flex;
+  align-items: center;
+  height: 103px;
+
+}
+
+.vertCenter{
+height: 30px;
+  line-height: 30px;
+
+}
+
+
 #toolkit{
   display: inline-block;
   position:fixed;

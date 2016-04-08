@@ -8,13 +8,30 @@ var dbConnect = require('./control/dbConnect')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var DAO = require('./DAO');
-
-DAO.uploadPost("TITIES", [{myContent: "hello helo heo", myMeta: "purple"},
-  {myContent: "Goodbye", myMeta: "orange"}]);
+var passport = require('passport');
+var flash = require('connect-flash');
+var expressSession = require('express-session');
 
 var app = express();
-dbConnect.open();
+
+
+app.use(expressSession({secret: 'mySecretKey', resave: true, saveUninitialized: true}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
+//dbConnect.open();
+// DAO.uploadPost("TITIES", [{myContent: "hello helo heo", myMeta: "purple"},
+//   {myContent: "Goodbye", myMeta: "orange"}]);
+
+
 // view engine setup
+
+var initPassport = require('./control/passport/init');
+initPassport(passport);
+
+var routes = require('./routes/index')(passport);
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
