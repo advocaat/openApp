@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 router.get('/upload', function(req, res, next) {
 
 
-  res.render('upload', { pageName: 'Open Records', pageDescription: 'Upload' });
+  res.render('upload', { pageName: 'Open Records', pageDescription: 'Login' });
 });
 
 router.get('/stats', function(req, res, next) {
