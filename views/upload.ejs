@@ -10,24 +10,23 @@ https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstr
              crossorigin="anonymous">
    </script>
 
+
+
 </head>
 <body>
 <% include partials/header.ejs %>
 <div id="mainBody" class="content-fluid">
-
-   <div class="row">
-      <div class="col-xs-8">
  <%include partials/myContent.ejs %>
 </div>
-<div class="col-xs-4">
+<aside>
    <%include partials/toolkit.ejs%>
-</div>
-   </div>
+</aside>
 <script>
 
    $("#addContent").on("click",function() {
       $(<% include partials/p.txt %>).insertAfter("#title");
    } )
+
 
    $("#upload").on("click", function(){
       var message = "";
@@ -43,7 +42,6 @@ https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstr
 <div id="fb-root"></div>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script src="javascripts/fbLogin.js"></script>
-    </div>
 </body>
 
 
