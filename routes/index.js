@@ -22,7 +22,7 @@ var isAuthenticated = function (req, res, next) {
             res.render('upload', {pageName: 'Open Records', pageDescription: 'Upload Posts To Selected Channels'});
         });
 
-        router.get('/signup', function (req, res) {
+        router.get('/signup',isAuthenticated, function (req, res) {
             res.render('signUp',{pageName: 'Signup', pageDescription: 'for testing'});
         });
 
@@ -38,17 +38,17 @@ var isAuthenticated = function (req, res, next) {
             failureRedirect: '/',
             failureFlash: true
         }));
-        router.get("/stats", function(req, res, next){
+        router.get("/stats", isAuthenticated,function(req, res, next){
             res.render("stats", {pageName: 'Statistics', pageDescription: 'view statistics generated from services'});
         });
         
         
-        router.get("/tracker", function(req, res, next){
+        router.get("/tracker",isAuthenticated ,function(req, res, next){
             res.render("piracy", {pageName: 'Pirate Tracer', pageDescription: 'View results of pirate tracking thingy'});
         })
 
 
-        router.get("/callback",function(req, res){
+        router.get("/callback", isAuthenticated,function(req, res){
             res.render('callback');
         });
 
