@@ -22,7 +22,7 @@ var isAuthenticated = function (req, res, next) {
         });
 
         router.get('/signup', function (req, res) {
-            res.render('signUp',{pageName: 'Signup', pageDescription: 'for testing'});
+            res.render('signup',{pageName: 'Signup', pageDescription: 'for testing'});
         });
 
 
