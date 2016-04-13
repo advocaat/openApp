@@ -1,40 +1,33 @@
 <html>
 <head>
-<title>Open App</title>
-   <meta charset="utf-8">
+    <title>Open App</title>
+    <meta charset="utf-8">
 
-   <% include partials/sources.ejs %>
+    <% include partials/sources.ejs %>
 
 </head>
 <body>
 <% include partials/header.ejs %>
 <div id="mainBody" class="content-fluid">
- <%include partials/myContent.ejs %>
+    <div class="row">
+        <div class="col-xs-8">
+            <% include partials/myContent.ejs %>
+        </div>
+        <div class="col-xs-4">
+            <% include partials/toolkit.ejs %>
+        </div>
+    </div>
 </div>
-<aside>
-   <%include partials/toolkit.ejs%>
-</aside>
-<script>
-
-   $("#addContent").on("click",function() {
-      $(<% include partials/p.txt %>).insertAfter("#title");
-   } )
-
-
-   $("#upload").on("click", function(){
-      var message = "";
-      message += $("#title").val() + "\n";
-      $(".block").each(function(){
-         message += $(this).val() + "\n";
-      })
-      console.log(message);
-      uploadFacebook(message);
-   })
-
-</script>
 <div id="fb-root"></div>
+
+<script src="javascripts/upload/contentBlocks.js"></script>
+<script src="javascripts/upload/platforms.js"></script>
+<script src="javascripts/upload/handleUpload.js"></script>
+<script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script src="javascripts/fbLogin.js"></script>
+<script src="javascripts/scLogin.js"></script>
+
 </body>
 
 

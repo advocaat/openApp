@@ -9,29 +9,6 @@ body {
 a {
   color: #00B7FF;
 }
-
-.menu {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
-.menu ul {
-  list-style-type: block;
-}
-
-.menu li {
-  margin: 0;
-  display: inline-block;
-}
-
-.menu li a {
-  display: block;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
 #mainBody{
   padding-left: 30px;
 
@@ -54,6 +31,8 @@ height: 30px;
 
 }
 
+ .centerCol h1{ display: inline-block}
+
 
 #toolkit{
   display: inline-block;
@@ -65,6 +44,11 @@ height: 30px;
   border: 2px solid powderblue;
 
 
+}
+.radios{
+  position: relative;
+  left: 742px;
+  margin-top:-136px;
 }
 .feet{
   background-color: #00B7FF;
@@ -80,4 +64,30 @@ body, html{
   padding: 0;
   margin: 0;
 
+}
+.blocko textarea:focus{
+  background-color: powderblue;
+
+}
+
+.menu {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.menu ul {
+  list-style-type: block;
+}
+
+.menu li {
+  margin: 0;
+  display: inline-block;
+}
+
+.menu li a {
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
