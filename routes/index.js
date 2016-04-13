@@ -3,6 +3,8 @@ var router = express.Router();
 var formidable = require('formidable');
 var  soundcloud = require('../control/soundcloud');
 
+
+
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
         return next();

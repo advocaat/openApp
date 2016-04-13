@@ -1,6 +1,7 @@
 $('input:checkbox').on("change", function(){
     console.log("hero");
-    updatePlatforms()
+    updatePlatforms();
+    testAndSetSelectOptions(this);
 });
 
 
@@ -18,3 +19,4 @@ function updatePlatforms(){
     })
 
 }
+

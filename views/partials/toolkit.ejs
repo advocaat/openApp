@@ -1,41 +1,69 @@
 <div id="toolkit">
-    <h2>Toolkit</h2>
+    <h3>Toolkit</h3>
 
     <div class="row">
-        <div  class="col-xs-12">
-        <label for="song">Upload Song</label><br/>
-        <input id="song" type="file" >
+        <div>
+            <button class="btn btn-default col-xs-12" id="btn_upload">Choose File</button>
+            <input id="song" type="file" class="hide">
+            <script>
+                $("#btn_upload").click(function (e) {
+                    e.preventDefault();
+                    $("#song").trigger('click');
+                });
+            </script>
+        </div>
+    </div>
+    <div class="row">
+<span class="col-xs-4 ">
+    <button id="addContent" class="toolkitButton btn btn-default">Add Block</button>
+</span>
+<span class="col-xs-4 ">
+    <button class="toolkitButton btn btn-default">Button2</button>
+</span>
+<span class=" col-xs-4 ">
+    <button id="upload" class="toolkitButton btn btn-default">Upload</button>
+</span>
+    </div>
+    <div id="checks">
+        <div class="row">
+            <div class="col-xs-5">
+                <label class="c-input c-checkbox">
+                    <input name="facebook" type="checkbox" id="faceCheck" class="col-xs-2 platform">
+                    <span class="c-indicator"></span>
+                    Facebook
+                </label>
             </div>
-    </div>
-<div class="row">
+            <div class="col-xs-5">
+                <label class="c-input c-checkbox">
+                    <input name="soundcloud" type="checkbox" id="soundCheck" class="col-xs-2 platform">
+                    <span class="c-indicator"></span>
+                    Soundcloud
+                </label>
+            </div>
+        </div>
 
-    <button id="addContent" class="col-xs-4">Add Block</button>
-    <button class="col-xs-4">Button2</button>
-    <button id="upload" class="col-xs-4">Upload</button>
+        <div class="row">
+            <div class="col-xs-5">
+                <label class="c-input c-checkbox">
+                    <input name="youtube" type="checkbox" id="youCheck" class="platform">
+                    <span class="c-indicator"></span>
+                    YouTube
+                </label>
+            </div>
+            <div class="col-xs-5">
+                <label class="c-input c-checkbox">
+                    <input name="beatport" type="checkbox" id="beatCheck" class="platform">
+                    <span class="c-indicator"></span>
+                    Beatport
+                </label>
+            </div>
+        </div>
 
-</div>
-    <div class="row">
-        <div  class="col-xs-8">
-            <b>Facebook</b>
-            <input name="facebook" type="checkbox" id="faceCheck" class="col-xs-2 platform">
     </div>
+    <div>
+        <h5>Block Type</h5>
+            <select id="blockType">
+                <option>Flat Content</option>
+            </select>
         </div>
-    <div class="row">
-        <div  class="col-xs-8">
-            <b>Soundcloud</b>
-            <input name="soundcloud" type="checkbox" id="soundCheck" class="col-xs-2 platform">
-        </div>
-    </div>
-    <div class="row">
-        <div  class="col-xs-8">
-        <b>YouTube</b>
-            <input name="youtube" type="checkbox" id="youCheck" class="col-xs-2  platform">
-        </div>
-    </div>
-    <div class="row">
-        <div  class="col-xs-8">
-            <b>Beatport</b>
-            <input name="beatport" type="checkbox" id="beatCheck" class="col-xs-2 platform">
-        </div>
-    </div>
 </div>

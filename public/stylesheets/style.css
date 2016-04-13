@@ -10,12 +10,17 @@ a {
   color: #00B7FF;
 }
 #mainBody{
+  position: relative;
+  top:170px;
   padding-left: 30px;
 
 }
 #pageHead{
   background-color: darkseagreen;
   min-height: 103px;
+  position: fixed;
+  width: 100%;
+  z-index: 5;
 
 }
 .centerTable{
@@ -38,17 +43,18 @@ height: 30px;
   display: inline-block;
   position:fixed;
   right:0;
-  top:150px;
+  top:154px;
   padding: 40px;
   margin-right: 12px;
   border: 2px solid powderblue;
-
+  text-align: center;
 
 }
+
 .radios{
   position: relative;
-  left: 742px;
-  margin-top:-136px;
+  left: 764px;
+  margin-top:-145px;
 }
 .feet{
   background-color: #00B7FF;
@@ -71,9 +77,13 @@ body, html{
 }
 
 .menu {
-  margin-left: auto;
-  margin-right: auto;
+  position: fixed;
   text-align: center;
+  width: 100%;
+  top:103px;
+  background-color: #00d4b4;
+  max-height: 50px;
+  z-index: 6;
 }
 
 .menu ul {
@@ -90,4 +100,18 @@ body, html{
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+}
+.hide{
+  visibility: hidden;
+  
+}
+.toolkitButton{
+  min-width:95%;
+
+
+}
+
+#checks{
+  margin-left: 60px;
+  margin-top: 40px;
 }
