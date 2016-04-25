@@ -1,6 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
 }
 .clearBack {
   background:transparent;
@@ -11,8 +12,9 @@ a {
 }
 #mainBody{
   position: relative;
-  top:170px;
+  top:150px;
   padding-left: 30px;
+  margin:0;
 
 }
 #pageHead{
@@ -47,14 +49,16 @@ height: 30px;
   padding: 40px;
   margin-right: 12px;
   border: 2px solid powderblue;
+  border-radius:15px;
+  background-color: powderblue;
   text-align: center;
 
 }
 
 .radios{
-  position: relative;
-  left: 764px;
-  margin-top:-145px;
+  position: absolute;
+  left: 776px;
+  /*margin-top:-145px;*/
 }
 .feet{
   background-color: #00B7FF;
@@ -114,4 +118,19 @@ body, html{
 #checks{
   margin-left: 60px;
   margin-top: 40px;
+}
+
+iframe{
+  display: inline-block;
+
+}
+
+#uploads{
+  position: absolute;
+  top: 10px;
+  right: 450px;
+  width: 80px;
+  bottom:0;
+  background-color: lightgray;
+
 }

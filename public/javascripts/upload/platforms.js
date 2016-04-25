@@ -11,7 +11,7 @@ function updatePlatforms(){
             block.platforms = [];
             $('.platform').each(function(){
                 if($(this).prop('checked')){
-                    block.platforms.push(this.name)
+                    block.platforms.push(this.name);
                 }
             });
             console.log(block.platforms.toString());

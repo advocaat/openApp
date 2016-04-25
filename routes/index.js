@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');
 var  soundcloud = require('../control/soundcloud');
-
+var model = require('../model/uploads');
 
 
 var isAuthenticated = function (req, res, next) {
@@ -11,7 +11,7 @@ var isAuthenticated = function (req, res, next) {
 
     res.redirect('/');
 }
-
+var up = require('../DAO/up')(router);
     module.exports = function (passport) {
         /* GET home page. */
         router.get('/', function (req, res, next) {
@@ -27,7 +27,7 @@ var isAuthenticated = function (req, res, next) {
         router.get('/signup',isAuthenticated, function (req, res) {
             res.render('signUp',{pageName: 'Signup', pageDescription: 'for testing'});
         });
-
+            
 
         router.post('/signup', passport.authenticate('signup', {
             successRedirect: '/login',
@@ -53,10 +53,12 @@ var isAuthenticated = function (req, res, next) {
         router.get("/callback", isAuthenticated,function(req, res){
             res.render('callback');
         });
-
+        
+        router.get("/modelUpdates", function(req, res){
+           res.send(JSON.stringify({items: model.getModel(), length: model.getUploadsLength()}));
+            
+        });
         return router;
-
-
     }
 
 

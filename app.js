@@ -11,6 +11,7 @@ var DAO = require('./DAO');
 var passport = require('passport');
 var flash = require('connect-flash');
 var expressSession = require('express-session');
+var busboy = require('connect-busboy');
 
 var app = express();
 
@@ -40,9 +41,10 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(busboy());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use('/up', express.static(__dirname + '/public', { maxAge: 0 }));
 app.use('/', routes);
 app.use('/users', users);
 

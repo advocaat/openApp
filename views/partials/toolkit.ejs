@@ -3,25 +3,28 @@
 
     <div class="row">
         <div>
-            <button class="btn btn-default col-xs-12" id="btn_upload">Choose File</button>
-            <input id="song" type="file" class="hide">
-            <script>
-                $("#btn_upload").click(function (e) {
-                    e.preventDefault();
-                    $("#song").trigger('click');
-                });
-            </script>
+            <!--<button class="btn btn-secondary col-xs-12" id="btn_upload">Choose File</button>-->
+            <!--<input id="song" type="file" class="hide">-->
+            <!--<script>-->
+                <!--$("#btn_upload").click(function (e) {-->
+                    <!--e.preventDefault();-->
+                    <!--$("#song").trigger('click');-->
+                <!--});-->
+            <!--</script>-->
+            <iframe src="/up" frameBorder="0"></iframe>
+            <div id="uploads" class="empty"></div>
+
         </div>
     </div>
     <div class="row">
 <span class="col-xs-4 ">
-    <button id="addContent" class="toolkitButton btn btn-default">Add Block</button>
+    <button id="addContent" class="toolkitButton btn btn-secondary">Add Block</button>
 </span>
 <span class="col-xs-4 ">
-    <button class="toolkitButton btn btn-default">Button2</button>
+    <button class="toolkitButton btn btn-secondary">Button2</button>
 </span>
 <span class=" col-xs-4 ">
-    <button id="upload" class="toolkitButton btn btn-default">Upload</button>
+    <button id="upload" class="toolkitButton btn btn-secondary">Upload</button>
 </span>
     </div>
     <div id="checks">
@@ -60,9 +63,9 @@
         </div>
 
     </div>
-    <div>
+    <div class="form-group">
         <h5>Block Type</h5>
-            <select id="blockType">
+            <select id="blockType" class="form-control">
                 <option>Flat Content</option>
             </select>
         </div>

@@ -2,31 +2,29 @@
 <head>
     <title><%= pageName %></title>
     <meta charset="utf-8">
-
     <% include partials/sources.ejs %>
-
 </head>
 <body>
 <% include partials/header.ejs %>
-
-<div class="container">
-    <form class='form-signin' action='/' method='POST'>
-        <h2 class='form-signin-heading'>Login</h2>
-        <!-- show any messages that come back with authentication -->
-        <% if (message.length > 0) { %>
-        <div class="alert alert-danger fade in"><%= message %></div>
-        <% } %>
-        <label class='sr-only'>Username</label>
-        <input type='text' name='username' class='form-control' placeholder='Username' required autofocus>
-        <label class='sr-only'>Password</label>
-        <input type='password' name='password' class='form-control' placeholder='Password' required>
-        <button class='btn btn-lg btn-primary btn-block' type='submit'>Sign in</button>
-    </form>
-
+<div id="mainBody" class="container">
+    <div class="row">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-4">
+            <form class='form-signin' action='/' method='POST'>
+                <h2 class='form-signin-heading'>Login</h2>
+                <!-- show any messages that come back with authentication -->
+                <% if (message.length > 0) { %>
+                <div class="alert alert-danger fade in"><%= message %></div>
+                <% } %>
+                <label class='sr-only'>Username</label>
+                <input type='text' name='username' class='form-control' placeholder='Username' required autofocus>
+                <label class='sr-only'>Password</label>
+                <input type='password' name='password' class='form-control' placeholder='Password' required>
+                <button class='btn btn-lg btn-primary btn-block' type='submit'>Sign in</button>
+            </form>
+        </div>
+    </div>
 </div>
-
-
-
 </body>
 
 
