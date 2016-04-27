@@ -1,7 +1,9 @@
+var User = require('../../models/user');
 var login = require('./login');
 var signup = require('./signup');
+var facebook = require('./facebook');
 
-var User = require('../../models/user');
+
 module.exports = function(passport) {
   
     passport.serializeUser(function(user, done) {
@@ -16,5 +18,6 @@ module.exports = function(passport) {
     });
     
     login(passport);
+    facebook(passport);
     signup(passport);
 };

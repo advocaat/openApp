@@ -15,9 +15,10 @@ function createContentBlock() {
     var block = {
         id: myId,
         content: "",
-        platforms: new Array(),
+        platforms: [],
         editing: false,
-        option: "",
+        option: "text",
+        optionValue: "",
         imageId: ""
     }
 
@@ -33,6 +34,34 @@ function createContentBlock() {
                     console.log(item.id + " image id " + item.imageId);
                 }
             })
+            droppable = true;
+            if(original){
+                var newDiv = $(ui.draggable).clone();
+                newDiv.draggable({
+                    stop: function( event, ui ) {
+                        if(!droppable)
+                            ui.helper.remove();
+                        myBlocks.forEach(function (item) {
+                            console.log("item " + item.id);
+                            if (blockId == item.id) {
+                                item.imageId = "";
+                                console.log(item.id + " image id " + item.imageId);
+                            }
+                        })
+                    },
+                    start: function( event, ui ) {
+                        droppable = false;
+                    }
+                });
+                $(this).append(newDiv);
+                // newDiv.css('top', '-100px')
+            }
+            else{
+                ui.helper.css('top','');
+                ui.helper.css('left','');
+                $(this).append(ui.helper);
+
+            }
 
             // var parent = ui.draggable.parent();
             // var draggedElement = $(ui.draggable);
@@ -45,38 +74,22 @@ function createContentBlock() {
             // draggedElement.draggable('option', 'containment', 'parent');
             //
 
-                droppable = true;
-                if(original){
-                    var newDiv = $(ui.draggable).clone();
-                    newDiv.draggable({
-                        stop: function( event, ui ) {
-                            if(!droppable)
-                                ui.helper.remove();
-                            myBlocks.forEach(function (item) {
-                                console.log("item " + item.id);
-                                if (blockId == item.id) {
-                                    item.imageId = "";
-                                    console.log(item.id + " image id " + item.imageId);
-                                }
-                            })
-                        },
-                        start: function( event, ui ) {
-                            droppable = false;
-                        }
-                    });
-                    $(this).append(newDiv);
-                   // newDiv.css('top', '-100px')
-                }
-                else{
-                    ui.helper.css('top','');
-                    ui.helper.css('left','');
-                    $(this).append(ui.helper);
 
-            }
         }
     });
 
     $('<input type="radio" id="blockSelector' + blocks + '" name="editing" class="radios">').appendTo(elem);
+    $('#contentBlock'+ blocks).on("keyup", function(event){
+        var tempValue = $(this).val();
+        var id = event.target.id;
+        myBlocks.forEach(function(block){
+            if(block.id == id) {
+                block.content = tempValue;
+                console.log(block.id + ": " + block.content);
+
+            }
+        })
+    })
     refreshChangedListener();
     blocks++;
     return block;
@@ -104,7 +117,7 @@ function refreshChangedListener() {
                         testAndSetSelectOptions(this);
                     }
                 })
-                $("#blockType").val(myBlocks[index].option);
+                $("#blockType").val(myBlocks[index].optionValue);
 
             })
         }
@@ -194,12 +207,14 @@ function handleTypeSelection() {
 $('#blockType').change(function () {
     myBlocks.forEach(function (block) {
         if (block.editing) {
-            block.option = $('#blockType option:selected').val();
+            block.optionValue = $('#blockType option:selected').val();
             if ($('#blockType option:selected').text() == "Image") {
+                block.option = "image";
                 $('.blocko #' + block.id).css({"visibility": "hidden"});
                 $('.blocko #' + block.id).rows = "2";
                 //$('.blocko  #' + block.id).parent().css({"min-height": "400px", "min-width": "600px"});
             } else {
+                block.option = "text";
                 $('.blocko #' + block.id).css({"visibility": "visible"});
                 $('.blocko #' + block.id).rows = "5";
             }

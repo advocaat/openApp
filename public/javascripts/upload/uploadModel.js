@@ -12,7 +12,8 @@ setInterval(function(){
             {
                 $('#uploads').empty();
                 model.items.forEach(function (item) {
-                    $('#uploads').append('<img id="'+ item +'" src="/up/file/' + item + '" class="draggable ui-widget-content"  height="80" width="80">');
+                    $('#uploads').append('<img id="'+ item +'" src="/up/file/' + item +
+                        '" class="draggable ui-widget-content"  height="80" width="80">');
                     $(".draggable").draggable({
                         containment: 'document',
                         helper: 'clone',

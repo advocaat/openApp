@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');
-var  soundcloud = require('../control/soundcloud');
+var soundcloud = require('../control/soundcloud');
 var model = require('../model/uploads');
-
+var graph = require('../control/facebook/graph');
 
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
@@ -58,6 +58,30 @@ var up = require('../DAO/up')(router);
            res.send(JSON.stringify({items: model.getModel(), length: model.getUploadsLength()}));
             
         });
+
+        router.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['manage_pages', 'publish_actions'] }));
+
+        router.get('/auth/facebook/callback',
+            passport.authenticate('facebook', { successRedirect: '/upload',
+                failureRedirect: '/' }));
+
+
+        router.get('/testy', function(req, res){
+            graph.getPageAccess();
+            // graph.post("/feed", {message: "server log in"}, function (err, res) {
+            //     console.log(res);
+            //
+            // })
+
+
+
+            //    
+
+            res.redirect('/upload');
+
+        });
+        
+  
         return router;
     }
 
