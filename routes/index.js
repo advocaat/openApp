@@ -4,7 +4,7 @@ var formidable = require('formidable');
 var soundcloud = require('../control/soundcloud');
 var model = require('../model/uploads');
 var graph = require('../control/facebook/graph');
-
+urls = require('../model/urls');
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
         return next();
@@ -59,7 +59,7 @@ var up = require('../DAO/up')(router);
             
         });
 
-        router.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['manage_pages', 'publish_actions'] }));
+        router.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['manage_pages', 'publish_pages'] }));
 
         router.get('/auth/facebook/callback',
             passport.authenticate('facebook', { successRedirect: '/upload',
@@ -67,16 +67,8 @@ var up = require('../DAO/up')(router);
 
 
         router.get('/testy', function(req, res){
-            graph.getPageAccess();
-            // graph.post("/feed", {message: "server log in"}, function (err, res) {
-            //     console.log(res);
-            //
-            // })
-
-
-
-            //    
-
+            var grapist = graph.getGraph();
+            graph.postPage("hello", urls.facebook);
             res.redirect('/upload');
 
         });

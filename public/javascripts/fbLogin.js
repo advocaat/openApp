@@ -25,11 +25,11 @@ function uploadFacebook(message) {
                 console.log('Good to see you, ' + response.name + '.');
             });
 
-
-
+            
             function submitFBPost(callback) {
                 FB.api("/me/accounts", function (response) {
                     var get = {};
+                    console.log("PAGE ID!!!"+ response["data"][0]["id"] + "ACCESS TOKEN "+ response["data"][0]["access_token"]);
                     get.url = response["data"][0]["id"] + "/feed";
                     get.access = response["data"][0]["access_token"];
                     callback(get);

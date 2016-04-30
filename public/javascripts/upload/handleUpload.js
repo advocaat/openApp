@@ -45,5 +45,5 @@ $("#upload").on("click", function () {
     console.log("facebook: " + facebookMessage + "images: " + facebookImages.toString());
     console.log("soundcloud: " + soundcloudMessage + "images: " + soundcloudImages.toString());
     console.log("youtube: " + youtubeMessage + "images: " + youtubeImages.toString())
-    //uploadFacebook("oh no!");
+    uploadFacebook("hello from the client");
 })

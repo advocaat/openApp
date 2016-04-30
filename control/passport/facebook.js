@@ -6,9 +6,8 @@ module.exports = function (passport) {
     passport.use('facebook', new FacebookStrategy(conf.fb,
         function (accessToken, refreshToken, profile, done) {
             console.log("fb access-token: "+ accessToken);
-            
-           graph.setToken(accessToken);
-
+            graph.setToken(accessToken);
+            graph.getPageAccess()          
             console.log('profile', profile);
             process.nextTick(function () {
             User.findOne({'id': profile.id}, function (err, user) {

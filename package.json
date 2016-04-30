@@ -17,6 +17,8 @@
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+    "facebook-node-sdk": "^0.2.0",
+    "fb": "^1.0.2",
     "fbgraph": "^1.1.0",
     "formidable": "^1.0.17",
     "gridfs-stream": "^1.1.1",
