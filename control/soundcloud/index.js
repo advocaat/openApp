@@ -31,6 +31,7 @@ functions.getFile = function () {
 }
 
 functions.getTracks = function (callback) {
+
     SC.get('/users/51708/tracks/?client_id=' + config.soundcloud.clientID, function (err, data) {
         console.log("tracks" + JSON.stringify(err));
         console.log("tracks" + JSON.stringify(data));
@@ -89,12 +90,11 @@ functions.getTrackData = function(tracks) {
 
 
 functions.authorizeSC = function () {
-
     User.findOne({'soundcloud.id': "218749953"}, function (err, user) {
         if (err) {
             return done(err);
         }
-
+  
         if (user) {
             console.log("Init");
             console.log("user found " + JSON.stringify(user));

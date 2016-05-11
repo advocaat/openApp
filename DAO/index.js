@@ -26,9 +26,7 @@ functions.insertTrackStats = function(trackStats){
     TrackStats.remove({}, function(err, data){
         if(err){
             console.log("removing error");
-            
         }
-        
     })
     
     trackStats.forEach(function(stat){
@@ -50,6 +48,18 @@ functions.insertTrackStats = function(trackStats){
     })
     
     
+}
+
+
+functions.pullStats = function(callback) {
+    TrackStats.find({}, function(err, docs){
+        if(err){
+            console.log("pull stat error " + err )
+        } else{
+            console.log("docs: " + JSON.stringify(docs))
+        }
+        callback(docs)
+    })
 }
 
 module.exports = functions;

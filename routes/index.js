@@ -6,6 +6,8 @@ var model = require('../model/uploads');
 var graph = require('../control/facebook/graph');
 var SC = require('../control/soundcloud');
 var urls = require('../model/urls');
+var DAO = require('../DAO');
+var statsData = require('../control/soundcloud/graphItemBuilder');
 var client;
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
@@ -74,13 +76,18 @@ var up = require('../DAO/up').router(router);
             passport.authenticate('soundcloud'));
         
         router.get('/auth/soundcloud/callback',
-            passport.authenticate('soundcloud',{ failureRedirect: '/'}),
+            passport.authenticate('soundcloud',{ failureRedirect: '/pooped'}),
         function(req, res){
             console.log("the code"+req.query.code)
             urls.soundcloud_code = req.query.code;
             res.redirect('/upload');
         });
 
+        router.get("/pooped", function(req, res){
+            res.render("killpage");
+            
+        });
+        
 router.get('/upload/sc', isAuthenticated, function(req, res){
     console.log("a user "+ req.user);
 
@@ -99,6 +106,26 @@ router.get('/upload/sc', isAuthenticated, function(req, res){
            });
             res.redirect('/upload');
         })
+
+router.get('/scdata', function(req, res){
+    DAO.pullStats(function(stats){
+        console.log("poop "+ stats)
+    })
+
+    res.redirect('/upload')
+})
+
+router.get('/graph', function(req, res){
+    var data = [];
+    DAO.pullStats(function(stats){
+        console.log("pooper "+ stats)
+        statsData.buildGraphObject(stats, function(graph){
+            //data.push[graph];
+            res.render('graph',  {graphy: JSON.stringify(graph)});
+        });
+    })
+    
+})
 
         return router;
     }
