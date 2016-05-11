@@ -1,49 +1,70 @@
 
 $("#upload").on("click", function () {
-
-    var facebookMessage = "";
-    var facebookImages = [];
-    var soundcloudMessage = "";
-    var soundcloudImages = [];
-    var youtubeMessage = "";
-    var youtubeImages = [] ;
-
+    
+    var facebook = {};
+    var soundcloud = {};
+    var youtube = {};
+    
+    facebook.message = "";
+    facebook.images = [];
+    soundcloud.message = "";
+    soundcloud.images = [];
+    soundcloud.audio;
+    youtube.message = "";
+    youtube.images = [] ;
+    
     myBlocks.forEach(function(block){
         if(block.platforms.indexOf("facebook") > -1) {
             switch (block.option) {
                 case "text":
-                    facebookMessage += block.content + "\n";
+                    facebook.message += block.content + "\n";
                     break;
                 case "image":
-                    facebookImages.push(block.imageId);
+                    facebook.images.push(block.imageId);
                     break;
             }
         }
         if(block.platforms.indexOf("soundcloud") > -1){
             switch (block.option) {
                 case "text":
-                    soundcloudMessage += block.content + "\n";
+                    soundcloud.message += block.content + "\n";
                     break;
                 case "image":
-                    soundcloudImages.push(block.imageId);
+                    soundcloud.images.push(block.imageId);
                     break;
+                case "audio":
+                    var reader = new FileReader(block.audioFile);
+                    var buf = reader.readAsArrayBuffer();
+
+                    soundcloud.audio = new Blob(buf, { type: 'audio/mp3'});
+
             }
 
         }
         if(block.platforms.indexOf("youtube") > -1){
             switch (block.option) {
                 case "text":
-                    youtubeMessage += block.content + "\n";
+                    youtube.message += block.content + "\n";
                     break;
                 case "image":
-                    youtubeImages.push(block.imageId);
+                    youtube.images.push(block.imageId);
                     break;
             }
         }
     })
 
-    console.log("facebook: " + facebookMessage + "images: " + facebookImages.toString());
-    console.log("soundcloud: " + soundcloudMessage + "images: " + soundcloudImages.toString());
-    console.log("youtube: " + youtubeMessage + "images: " + youtubeImages.toString())
-    uploadFacebook("hello from the client");
+    // console.log("facebook: " + facebookMessage + "images: " + facebookImages.toString());
+    // console.log("soundcloud: " + soundcloudMessage + "images: " + soundcloudImages.toString());
+    // console.log("youtube: " + youtubeMessage + "images: " + youtubeImages.toString())
+    // uploadFacebook("hello from the client");
+    //
+    //
+    
+ 
+    var socket = io('http://localhost:3000');
+    console.log("emitting");
+    socket.emit("facebook", facebook);
+    socket.emit("youtube", youtube);
+    socket.emit("soundcloud", soundcloud);
+    
 })

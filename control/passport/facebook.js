@@ -10,14 +10,17 @@ module.exports = function (passport) {
             graph.getPageAccess()          
             console.log('profile', profile);
             process.nextTick(function () {
-            User.findOne({'id': profile.id}, function (err, user) {
+            User.findOne({'facebook.id': profile.id}, function (err, user) {
                 if (err) {
+
                     return done(err);
                 }
                 
                 if (user) {
+                    console.log("found facebook");
                     return done(null, user); // User found, return that user
                 } else {
+                    
                     // If there is no user found with that facebook id, create them
                     var newUser = new User();
                     // Set all of the facebook information in our user model

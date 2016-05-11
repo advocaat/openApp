@@ -179,7 +179,7 @@ function testAndSetSelectOptions(thing) {
 
 optgroups = {
     fb: '<optgroup id="fb" label="Facebook"><option val="1">Image</option></optgroup>',
-    sc: '<optgroup id="sc" label="Soundcloud"><option val="2">Image</option><option val="3">Potato</option></optgroup>',
+    sc: '<optgroup id="sc" label="Soundcloud"><option val="2">Image</option><option val="3">Audio</option></optgroup>',
     yt: '<optgroup id="yt" label="YouTube"><option val="4">Image</option><option val="5">Potato</optionval></optgroup>',
     bp: '<optgroup id="bp" label="Beatport"><option val="6">Image</option><option val="7">Potato</option></optgroup>'
 }
@@ -213,6 +213,8 @@ $('#blockType').change(function () {
                 $('.blocko #' + block.id).css({"visibility": "hidden"});
                 $('.blocko #' + block.id).rows = "2";
                 //$('.blocko  #' + block.id).parent().css({"min-height": "400px", "min-width": "600px"});
+            }else if($('#blockType option:selected').text() == "Audio"){
+                block.option = "audio";
             } else {
                 block.option = "text";
                 $('.blocko #' + block.id).css({"visibility": "visible"});

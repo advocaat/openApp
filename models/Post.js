@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
     var blockSchema = new Schema({
+    destination: String,
     block: String,
     meta: []
 })

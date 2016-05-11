@@ -28,7 +28,7 @@ app.use(flash());
 
 // view engine setup
 
-var initPassport = require('./control/passport/init');
+var initPassport =  require('./control/passport/init');
 initPassport(passport);
 
 var routes = require('./routes/index')(passport);

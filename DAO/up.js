@@ -7,16 +7,31 @@ Grid.mongo = mongoose.mongo;
 var db = require('./mongoConnect.js');
 var mongo = require('mongodb'); // 2.0.31
 var StreamGridFile = require('./streamGrid');
+var gfsSingle = require('../model/gfs');
 var gfs;
+
+var blobstream = require('blob-stream');
+var fs = require('fs');
 var model = require('../model/uploads');
 
-db.open(function (err, data) {
-    if (err) throw err;
-    console.log("data " + data);
-    gfs = Grid(data);
-});
 
-module.exports = function(router) {
+
+
+functions = {};
+
+
+
+
+functions.router = function(router) {
+
+    db.open(function (err, data) {
+        if (err) throw err;
+        console.log("data " + data);
+        gfs = Grid(data);
+        gfsSingle.setGfs(gfs);
+        console.log("set gfs");
+    });
+    
     var Busboy = require('busboy'); // 0.2.9
     var GridStore = mongo.GridStore;
     var ObjectID = require('mongodb').ObjectID;
@@ -89,3 +104,35 @@ module.exports = function(router) {
         });
     });
 };
+
+var body = '';
+functions.getFile = function(fileId, callback){
+    gfs.findOne({_id: fileId}, function (err, file) {
+        // if (err) return res.status(400).send(err);
+        // if (!file) return res.status(404).send('');
+
+        var readstream = gfs.createReadStream({
+            _id: file._id
+        });
+
+        readstream.on("error", function (err) {
+            console.log("Got error while processing stream " + err.message);
+        
+        });
+        readstream.on('data', function(chunk){
+
+            body += chunk;
+        });
+
+        readstream.on('end', function(){
+            console.log("oday "+ body);
+            callback(body, file.filename);
+            });
+        
+    });
+}
+
+
+
+
+module.exports = functions;

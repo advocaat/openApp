@@ -7,7 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('openApp:server');
 var http = require('http');
-
+var graph = require('../control/facebook/graph');
+var urls = require('../model/urls');
 /**
  * Get port from environment and store in Express.
  */
@@ -24,6 +25,13 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+var io = require('socket.io')(server);
+io.on('connection', function(socket){
+  socket.on('facebook', function(data){
+    graph.postPage(data.message, urls.facebook);
+  });
+
+});
 
 server.listen(port);
 server.on('error', onError);

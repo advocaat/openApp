@@ -2,7 +2,7 @@ var User = require('../../models/user');
 var login = require('./login');
 var signup = require('./signup');
 var facebook = require('./facebook');
-
+var soundcloud = require('./soundcloud');
 
 module.exports = function(passport) {
   
@@ -19,5 +19,6 @@ module.exports = function(passport) {
     
     login(passport);
     facebook(passport);
+    soundcloud(passport);
     signup(passport);
 };

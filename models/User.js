@@ -15,6 +15,10 @@ module.exports = mongoose.model('User', {
         id: String,
         username: String,
         password: String
+    },
+    soundcloud: {
+        id: String,
+        access_token: String
     }
 
 });

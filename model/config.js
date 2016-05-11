@@ -8,6 +8,11 @@ module.exports = {
         'clientID': '991475010939147',
         'clientSecret': 'fc6df8828eed798d7e93aba2fc5b28c0',
         'callbackURL': 'http://localhost:3000/auth/facebook/callback'
+    },
+    soundcloud: {
+        clientID: "f744cb25a007c11da25cb45b805318a8",
+        clientSecret: "e808cdc7373c8443f23ea84fa3f2e40c",
+        callbackURL: "http://localhost:3000/auth/soundcloud/callback"
     }
     // twitter: {
     //     'apikey': '9I081pFvS4nePQJkaZOPvlCFA',

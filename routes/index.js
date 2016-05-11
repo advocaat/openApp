@@ -1,17 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');
-var soundcloud = require('../control/soundcloud');
+//var soundcloud = require('../control/passport/soundcloud');
 var model = require('../model/uploads');
 var graph = require('../control/facebook/graph');
-urls = require('../model/urls');
+var SC = require('../control/soundcloud');
+var urls = require('../model/urls');
+var client;
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
         return next();
 
     res.redirect('/');
 }
-var up = require('../DAO/up')(router);
+var up = require('../DAO/up').router(router);
     module.exports = function (passport) {
         /* GET home page. */
         router.get('/', function (req, res, next) {
@@ -44,15 +46,16 @@ var up = require('../DAO/up')(router);
             res.render("stats", {pageName: 'Statistics', pageDescription: 'view statistics generated from services'});
         });
         
-        
+
+
         router.get("/tracker",isAuthenticated ,function(req, res, next){
             res.render("piracy", {pageName: 'Pirate Tracer', pageDescription: 'View results of pirate tracking thingy'});
         })
 
 
-        router.get("/callback", isAuthenticated,function(req, res){
-            res.render('callback');
-        });
+        // router.get("/callback", isAuthenticated,function(req, res){
+        //     res.render('callback');
+        // });
         
         router.get("/modelUpdates", function(req, res){
            res.send(JSON.stringify({items: model.getModel(), length: model.getUploadsLength()}));
@@ -61,34 +64,58 @@ var up = require('../DAO/up')(router);
 
         router.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['manage_pages', 'publish_pages'] }));
 
+
+
         router.get('/auth/facebook/callback',
             passport.authenticate('facebook', { successRedirect: '/upload',
                 failureRedirect: '/' }));
-
-
-        router.get('/testy', function(req, res){
-            var grapist = graph.getGraph();
-            graph.postPage("hello", urls.facebook);
-            res.redirect('/upload');
-
-        });
         
-  
+        router.get('/auth/soundcloud',
+            passport.authenticate('soundcloud'));
+        
+        router.get('/auth/soundcloud/callback',
+            passport.authenticate('soundcloud',{ failureRedirect: '/'}),
+        function(req, res){
+            console.log("the code"+req.query.code)
+            urls.soundcloud_code = req.query.code;
+            res.redirect('/upload');
+        });
+
+router.get('/upload/sc', isAuthenticated, function(req, res){
+    console.log("a user "+ req.user);
+
+    res.redirect('http://localhost:3000/upload');
+
+})
+        router.get('/fb', function(req, res){
+            graph.postPage("jhjdhd", urls.facebook);
+            res.redirect('/upload');
+        });
+
+        router.get('/sc', function(req, res){
+           SC.authorizeSC();
+           SC.getTracks(function(tracks){
+               SC.getTrackData(tracks);
+           });
+            res.redirect('/upload');
+        })
+
         return router;
     }
 
 
     function redirectHandler(req, res)
     {
-        var code = req.query.code;
-            console.log("soundcloud code " + code);
-            SC.authorize(code, function(err, accessToken) {
-                if ( err ) {
-                    throw err;
-                } else {
-                    // Client is now authorized and able to make API calls
-                    console.log('access token:', accessToken);
-                }
-            });
+
+        // var code = req.query.code;
+        //     console.log("soundcloud code " + code);
+        //     SC.authorize(code, function(err, accessToken) {
+        //         if ( err ) {
+        //             throw err;
+        //         } else {
+        //             // Client is now authorized and able to make API calls
+        //             console.log('access token:', accessToken);
+        //         }
+        //     });
 
     }
