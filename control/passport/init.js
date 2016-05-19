@@ -3,6 +3,7 @@ var login = require('./login');
 var signup = require('./signup');
 var facebook = require('./facebook');
 var soundcloud = require('./soundcloud');
+var beatport = require('./beatport');
 
 module.exports = function(passport) {
   
@@ -20,5 +21,6 @@ module.exports = function(passport) {
     login(passport);
     facebook(passport);
     soundcloud(passport);
+    beatport(passport);
     signup(passport);
 };

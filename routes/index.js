@@ -2,13 +2,14 @@ var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');
 //var soundcloud = require('../control/passport/soundcloud');
-var model = require('../model/uploads');
+//var model = require('../model/oldUploads');
 var graph = require('../control/facebook/graph');
 var SC = require('../control/soundcloud');
 var urls = require('../model/urls');
 var DAO = require('../DAO');
 var statsData = require('../control/soundcloud/graphItemBuilder');
 var client;
+var beatport = require('../control/beatport');
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
         return next();
@@ -44,9 +45,7 @@ var up = require('../DAO/up').router(router);
             failureRedirect: '/',
             failureFlash: true
         }));
-        router.get("/stats", isAuthenticated,function(req, res, next){
-            res.render("stats", {pageName: 'Statistics', pageDescription: 'view statistics generated from services'});
-        });
+
         
 
 
@@ -59,10 +58,10 @@ var up = require('../DAO/up').router(router);
         //     res.render('callback');
         // });
         
-        router.get("/modelUpdates", function(req, res){
-           res.send(JSON.stringify({items: model.getModel(), length: model.getUploadsLength()}));
-            
-        });
+        // router.get("/modelUpdates", function(req, res){
+        //    res.send(JSON.stringify({items: model.getModel(), length: model.getUploadsLength()}));
+        //    
+        // });
 
         router.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['manage_pages', 'publish_pages'] }));
 
@@ -115,17 +114,35 @@ router.get('/scdata', function(req, res){
     res.redirect('/upload')
 })
 
-router.get('/graph', function(req, res){
+router.get('/beatport', function(req, res){
+    beatport.getByArtist();
+    res.redirect('/')
+
+})
+
+router.get('/stats', function(req, res){
     var data = [];
     DAO.pullStats(function(stats){
         console.log("pooper "+ stats)
         statsData.buildGraphObject(stats, function(graph){
             //data.push[graph];
-            res.render('graph',  {graphy: JSON.stringify(graph)});
+            res.render('graph',  {graphy: JSON.stringify(graph), pageName: 'Statistics', pageDescription: 'view statistics generated from services'});
         });
     })
     
 })
+
+        router.get('/auth/beatport',
+            passport.authenticate('beatport'));
+
+        
+        
+        router.get('/auth/beatport/callback',
+            passport.authenticate('beatport', { failureRedirect: '/login' }),
+            function(req, res) {
+                // Successful authentication, redirect home.
+                res.redirect('/');
+            });
 
         return router;
     }

@@ -3,6 +3,7 @@ var uploads = [];
 functions = {};
 
 functions.addUpload = function(id){
+    io.added = true;
     uploads.push(id);
 }
 functions.getUpload = function(index){
@@ -14,5 +15,6 @@ functions.getUploadsLength = function(){
 functions.getModel = function(){
     return uploads;
 };
+
 
 module.exports = functions;

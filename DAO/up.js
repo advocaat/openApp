@@ -1,5 +1,5 @@
 
-var uploads = require('../model/uploads');
+//var uploads = require('../model/uploads');
 var Grid = require('gridfs-stream'); // 1.1.1"
 var data = require('./mongoConnect');
 var mongoose = require('mongoose');
@@ -9,10 +9,10 @@ var mongo = require('mongodb'); // 2.0.31
 var StreamGridFile = require('./streamGrid');
 var gfsSingle = require('../model/gfs');
 var gfs;
-
+var uploads = require('../model/uploads');
 var blobstream = require('blob-stream');
 var fs = require('fs');
-var model = require('../model/uploads');
+//var model = require('../model/uploads');
 
 
 
@@ -20,7 +20,7 @@ var model = require('../model/uploads');
 functions = {};
 
 
-
+var myMime;
 
 functions.router = function(router) {
 
@@ -48,6 +48,7 @@ functions.router = function(router) {
 
     router.post('/up/file', function (req, res) {
         var busboy = new Busboy({headers: req.headers});
+       // console.log(JSON.stringify(req));
         var fileId = new mongo.ObjectId();
         busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
             console.log('got file', filename, mimetype, encoding);
@@ -57,33 +58,47 @@ functions.router = function(router) {
                 mode: 'w',
                 content_type: mimetype
             });
-            uploads.addUpload(fileId);
+            myMime = mimetype;
+            //uploads.addUpload(fileId);
+
             file.pipe(writeStream);
         }).on('finish', function () {
-            // show a link to the uploaded file
-            res.writeHead(200, {'content-type': 'text/html'});
-            res.end('<link href="/stylesheets/bootstrap.min.css"  type="text/css" rel="stylesheet">'+
-                '<form style="background-color: powderblue" action="/up/file" class="form" enctype="multipart/form-data" method="post">' +
-                '<input type="file"  class="form-control" name="file" required>' +
-                '<input type="submit" class="form-control" value="Upload">' +
-                '</form>');
+            if(myMime.toString().indexOf("audio") != -1){
+                console.log("Audio");
+                uploads.audio = true;
+                uploads.added = fileId;
+            }else{
+                console.log("not Audio");
 
+                uploads.audio = false;
+                uploads.added = fileId;
+            }
+            // show a link to the uploaded file
+
+            // res.writeHead(200, {'content-type': 'text/html'});
+            // res.end('<link href="/stylesheets/bootstrap.min.css"  type="text/css" rel="stylesheet">'+
+            //     '<form style="background-color: powderblue" action="/up/file" class="form" enctype="multipart/form-data" method="post">' +
+            //     '<input type="file"  class="form-control" name="file" required>' +
+            //     '<input type="submit" class="form-control" value="Upload">' +
+            //     '</form>');
+            res.render('partials/up')
         });
         req.pipe(busboy);
     });
 
     router.get('/up/', function (req, res) {
         // show a file upload form
-        res.writeHead(200, {'content-type': 'text/html'});
-        res.end(
-            '<link href="/stylesheets/bootstrap.min.css"  type="text/css" rel="stylesheet">'+
-            '<form style="background-color: powderblue" action="/up/file" class="form" enctype="multipart/form-data" method="post">' +
-            '<input type="file"  class="form-control" name="file" required>' +
-            '<input type="submit" class="form-control" value="Upload">' +
-            '</form>'
-        );
+       // res.writeHead(200, {'content-type': 'text/html'});
+        res.render('partials/up')
+    //     res.end(
+    //         '<link href="/stylesheets/bootstrap.min.css"  type="text/css" rel="stylesheet">'+
+    //         '<form style="background-color: powderblue" action="/up/file" class="form" enctype="multipart/form-data" method="post">' +
+    //         '<input type="file"  class="form-control" name="file" required>' +
+    //         '<input type="submit" class="form-control" value="Upload">' +
+    //         '</form>'
+    //     );
     });
-    
+
     router.get('/up/file/:id', function (req, res) {
         gfs.findOne({_id: req.params.id}, function (err, file) {
             if (err) return res.status(400).send(err);
@@ -105,12 +120,9 @@ functions.router = function(router) {
     });
 };
 
-var body = '';
+var body = [];
 functions.getFile = function(fileId, callback){
     gfs.findOne({_id: fileId}, function (err, file) {
-        // if (err) return res.status(400).send(err);
-        // if (!file) return res.status(404).send('');
-
         var readstream = gfs.createReadStream({
             _id: file._id
         });
@@ -121,12 +133,19 @@ functions.getFile = function(fileId, callback){
         });
         readstream.on('data', function(chunk){
 
-            body += chunk;
+            body.push(chunk);
         });
 
         readstream.on('end', function(){
-            console.log("oday "+ body);
-            callback(body, file.filename);
+            var cunt = new Int8Array(body);
+            // var i = 0;
+            // cunt.map(
+            //     function(){
+            //         i++;
+            //         return body[i];
+            //     });
+            console.log("oday "+ cunt.toString());
+            callback(new Int8Array(body), file.filename);
             });
         
     });

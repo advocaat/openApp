@@ -13,7 +13,6 @@ var up = require('../../DAO/up');
 
 functions = {};
 
-
 functions.getFile = function () {
     up.gfs.findOne('5718a039f7cf2c0c2cf8ccf5', function (filename, data) {
         SC.post('/me/tracks/?client_id=' + config.soundcloud.clientID, {
@@ -31,21 +30,18 @@ functions.getFile = function () {
 }
 
 functions.getTracks = function (callback) {
-
     SC.get('/users/51708/tracks/?client_id=' + config.soundcloud.clientID, function (err, data) {
         console.log("tracks" + JSON.stringify(err));
         console.log("tracks" + JSON.stringify(data));
         var url = ""
         for (var elem in data) {
             url += data[elem]['id'] + ',';
-
         }
         callback(url.substring(0, url.lastIndexOf(",")));
     });
 }
 
 functions.getTrackData = function(tracks) {
-
     SC.get("/users/51708/tracks?ids=" + tracks + ";client_id=" + config.soundcloud.clientID, function (err, data) {
         console.log("track data " + JSON.stringify(data));
         var statList = [];
@@ -60,7 +56,6 @@ functions.getTrackData = function(tracks) {
             trackStat.favorites = data[elem]["favoritings_count"];
             trackStat.uploaded = data[elem]["created_at"];
             statList.push(trackStat);
-
         }
 
         console.log("statys " + statList.toString())
@@ -107,8 +102,8 @@ functions.authorizeSC = function () {
             // up.getFile('5718a039f7cf2c0c2cf8ccf5',function(blob, name) {
             //     console.log("Here mayte");
             //     SC.post('/me/tracks/?client_id=' + config.soundcloud.clientID, {
-            //         file: blob,
-            //         title: name
+            //         "asset-data": blob,
+            //         "title": name
             //     }, function (err, data) {
             //         if (err) {
             //             console.log("my err" + JSON.stringify(err))
@@ -116,8 +111,8 @@ functions.authorizeSC = function () {
             //             console.log("sent" + JSON.stringify(data))
             //         }
             //     });
-            //
-            //
+
+
             // })
 
         }

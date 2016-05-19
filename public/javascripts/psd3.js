@@ -169,7 +169,7 @@ psd3.Pie.prototype.textTransform = function(d) {
 };
 
 psd3.Pie.prototype.textTitle = function(d) {
-    return d.data[_this.config.value];
+        return d.data[_this.config.value];
 };
 
 psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, originalDatasetLength, innerRadius, outerRadius, radiusDelta, startAngle, endAngle, parentCentroid) {
@@ -186,7 +186,10 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
     // console.log("endAngle = " + endAngle);
 
     psd3.Pie.prototype.textText = function(d) {
-        return _this.config.label(d);
+        if(d.data.hasOwnProperty("drilldown")){
+            return _this.config.label(d);
+        }
+
     };
 
     var pie = d3.layout.pie();

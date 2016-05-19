@@ -1,4 +1,4 @@
-
+var socket = io('http://localhost:3000');
 $("#upload").on("click", function () {
     
     var facebook = {};
@@ -61,7 +61,7 @@ $("#upload").on("click", function () {
     //
     
  
-    var socket = io('http://localhost:3000');
+
     console.log("emitting");
     socket.emit("facebook", facebook);
     socket.emit("youtube", youtube);

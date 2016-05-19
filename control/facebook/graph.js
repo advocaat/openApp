@@ -33,7 +33,7 @@ functions.getPageAccess = function () {
 }
 
 functions.postPage = function(message, url) {
-    graph.post(url, {message: message}, function(res){
+    graph.post(url, {message: message}, function(err, res){
         console.log("posted " + JSON.stringify(res));
     })
 }

@@ -13,6 +13,7 @@ process.nextTick(function(){
 
                 User.findOne({ 'soundcloud.id': profile.id}, function (err, user) {
                     if (err) {
+                        console.log("login error "+ err);
                         return done(err);
                     }
                     if(user) {
@@ -20,11 +21,11 @@ process.nextTick(function(){
 
                             console.log("user found " + JSON.stringify(user));
                             return done(err, user);
-                        }
                         } else {
-                            User.remove({'soundcloud.id' : "218749953"}, function (err, data) {
-                                if(err){console.log("removing error")
-                                }else{
+                            User.remove({'soundcloud.id': "218749953"}, function (err, data) {
+                                if (err) {
+                                    console.log("removing error")
+                                } else {
                                     console.log("items removed")
 
                                 }
@@ -43,7 +44,7 @@ process.nextTick(function(){
                             });
                         }
 
-
+                    }
                 });
             });
         }

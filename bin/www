@@ -9,6 +9,7 @@ var debug = require('debug')('openApp:server');
 var http = require('http');
 var graph = require('../control/facebook/graph');
 var urls = require('../model/urls');
+var uploads = require('../model/uploads');
 /**
  * Get port from environment and store in Express.
  */
@@ -27,10 +28,24 @@ var server = http.createServer(app);
  */
 var io = require('socket.io')(server);
 io.on('connection', function(socket){
+setInterval(function(){
+  if(uploads.added != null){
+    process.nextTick(function(){
+      socket.emit("update",{ id: uploads.added.toString(), isAudio: uploads.audio});
+      console.log("emitted "+ uploads.added + uploads.audio.toString());
+    uploads.added = null;
+    uploads.setAudio(false);
+    })
+   }
+}, 1000);
+  
   socket.on('facebook', function(data){
     graph.postPage(data.message, urls.facebook);
   });
-
+  
+  
+  
+  
 });
 
 server.listen(port);
