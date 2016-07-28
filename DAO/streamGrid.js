@@ -1,6 +1,4 @@
 
-
-
 module.exports = function StreamGridFile(req, res, GridFile) {
     if (req.headers['range']) {
         // Range request, partialle stream the file
@@ -8,8 +6,6 @@ module.exports = function StreamGridFile(req, res, GridFile) {
         var parts = req.headers['range'].replace(/bytes=/, "").split("-");
         var partialstart = parts[0];
         var partialend = parts[1];
-
-
         var start = parseInt(partialstart, 10);
 
         var end = partialend ? parseInt(partialend, 10) : GridFile.length - 1;

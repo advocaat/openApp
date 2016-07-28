@@ -10,6 +10,8 @@ var http = require('http');
 var graph = require('../control/facebook/graph');
 var urls = require('../model/urls');
 var uploads = require('../model/uploads');
+var scheduler = require('../scheduler');
+var serviceHandler = require('../serviceHandler');
 /**
  * Get port from environment and store in Express.
  */
@@ -23,6 +25,7 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+scheduler.scheduleDaily(6, serviceHandler.getTrackDataFromSoundcloud);
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -39,13 +42,11 @@ setInterval(function(){
    }
 }, 1000);
   
+  
   socket.on('facebook', function(data){
-    graph.postPage(data.message, urls.facebook);
+    console.log(data.schedule)
+    scheduler.schedulePost(data.schedule ,graph.postPage, data.message);
   });
-  
-  
-  
-  
 });
 
 server.listen(port);

@@ -1,11 +1,9 @@
 var blocks = 0;
-
 var myBlocks = [];
 
 $("#addContent").on("click", function () {
     var newBlock = createContentBlock();
     myBlocks.push(newBlock);
-
 })
 
 
@@ -19,7 +17,8 @@ function createContentBlock() {
         editing: false,
         option: "text",
         optionValue: "",
-        imageId: ""
+        imageId: "",
+
     }
 
     $(".blocko").droppable({
@@ -62,19 +61,7 @@ function createContentBlock() {
                 $(this).append(ui.helper);
 
             }
-
-            // var parent = ui.draggable.parent();
-            // var draggedElement = $(ui.draggable);
-            // var dropZone = $(this);
-            // var leftOffset = Math.abs(parent.offset().left - dropZone.offset().left);
-            // var topOffset = dropZone.offset().top - parent.offset().top;
-            // draggedElement.clone().appendTo(dropZone);
-            // draggedElement.css('left', draggedElement.position().left - leftOffset);
-            // draggedElement.css('top', draggedElement.position().top - topOffset);
-            // draggedElement.draggable('option', 'containment', 'parent');
-            //
-
-
+            
         }
     });
 

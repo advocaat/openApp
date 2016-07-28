@@ -1,3 +1,7 @@
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css");
+
+input[type=text] { width: 100%; box-sizing: border-box; height: 28px; }
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -18,17 +22,20 @@ a {
 
 }
 #pageHead{
-  background-color: darkseagreen;
+  background-color: ghostwhite;
   min-height: 103px;
   position: fixed;
   width: 100%;
   z-index: 5;
+  border-bottom: 1px solid #78909C;
+  color: #181818;
 
 }
 .centerTable{
   display: flex;
   align-items: center;
   height: 103px;
+
 
 }
 
@@ -47,18 +54,18 @@ height: 30px;
   right:0;
   top:154px;
   padding: 40px;
-  margin-right: 12px;
-  border: 2px solid powderblue;
-  border-radius:15px;
-  background-color: powderblue;
-  text-align: center;
 
+  border: 2px solid powderblue;
+
+  background-color: ghostwhite;
+  text-align: center;
+  width: 462px;
 }
 
 .radios{
-  position: absolute;
+  position: relative;
   left: 776px;
-  /*margin-top:-145px;*/
+  top: -145px;
 }
 .feet{
   background-color: #00B7FF;
@@ -85,9 +92,11 @@ body, html{
   text-align: center;
   width: 100%;
   top:103px;
-  background-color: #00d4b4;
-  max-height: 50px;
+  background-color: #CFD8DC;
+  max-height: 54px;
   z-index: 6;
+  border-top: 1px solid #78909C;
+  border-bottom: 1px solid #78909C
 }
 
 .menu ul {
@@ -104,7 +113,13 @@ body, html{
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  color: #181818;
+  font-weight: 600;
 }
+
+
+
+
 .hide{
   visibility: hidden;
   
@@ -127,10 +142,45 @@ iframe{
 
 #uploads{
   position: absolute;
-  top: 10px;
+  top: 0;
   right: 450px;
   width: 80px;
   bottom:0;
-  background-color: lightgray;
+  background-color: #CFD8DC;
+  border-left: 1px solid #78909C;
+  border-right: 1px solid #78909C;
 
+}
+
+#footer{
+  position: fixed;
+  top: 656px;
+  width: 100%;
+  height: 200px;
+  background-color: ghostwhite;
+  overflow-y: hidden;
+  border-top: 1px solid #78909C;
+
+}
+
+.desc{
+  text-align: center;
+  position: absolute;
+  right: 0px;
+  height: 48px;
+  top: 20px;
+  width: 452px;
+
+  border-top: 1px solid #78909C;
+  border-left: 1px solid #78909C;
+  border-top-left-radius: 25px;
+}
+
+#centerDiv{
+  text-align: center;
+
+}
+
+.padTop{
+  margin-top: 15px;
 }

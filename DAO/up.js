@@ -1,5 +1,5 @@
 
-//var uploads = require('../model/uploads');
+
 var Grid = require('gridfs-stream'); // 1.1.1"
 var data = require('./mongoConnect');
 var mongoose = require('mongoose');
@@ -10,9 +10,8 @@ var StreamGridFile = require('./streamGrid');
 var gfsSingle = require('../model/gfs');
 var gfs;
 var uploads = require('../model/uploads');
-var blobstream = require('blob-stream');
 var fs = require('fs');
-//var model = require('../model/uploads');
+
 
 
 
@@ -32,7 +31,7 @@ functions.router = function(router) {
         console.log("set gfs");
     });
     
-    var Busboy = require('busboy'); // 0.2.9
+    var Busboy = require('busboy'); 
     var GridStore = mongo.GridStore;
     var ObjectID = require('mongodb').ObjectID;
     
@@ -48,7 +47,6 @@ functions.router = function(router) {
 
     router.post('/up/file', function (req, res) {
         var busboy = new Busboy({headers: req.headers});
-       // console.log(JSON.stringify(req));
         var fileId = new mongo.ObjectId();
         busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
             console.log('got file', filename, mimetype, encoding);
@@ -59,8 +57,6 @@ functions.router = function(router) {
                 content_type: mimetype
             });
             myMime = mimetype;
-            //uploads.addUpload(fileId);
-
             file.pipe(writeStream);
         }).on('finish', function () {
             if(myMime.toString().indexOf("audio") != -1){
@@ -69,34 +65,17 @@ functions.router = function(router) {
                 uploads.added = fileId;
             }else{
                 console.log("not Audio");
-
                 uploads.audio = false;
                 uploads.added = fileId;
             }
-            // show a link to the uploaded file
-
-            // res.writeHead(200, {'content-type': 'text/html'});
-            // res.end('<link href="/stylesheets/bootstrap.min.css"  type="text/css" rel="stylesheet">'+
-            //     '<form style="background-color: powderblue" action="/up/file" class="form" enctype="multipart/form-data" method="post">' +
-            //     '<input type="file"  class="form-control" name="file" required>' +
-            //     '<input type="submit" class="form-control" value="Upload">' +
-            //     '</form>');
+          
             res.render('partials/up')
         });
         req.pipe(busboy);
     });
 
-    router.get('/up/', function (req, res) {
-        // show a file upload form
-       // res.writeHead(200, {'content-type': 'text/html'});
+    router.get('/up', function (req, res) {
         res.render('partials/up')
-    //     res.end(
-    //         '<link href="/stylesheets/bootstrap.min.css"  type="text/css" rel="stylesheet">'+
-    //         '<form style="background-color: powderblue" action="/up/file" class="form" enctype="multipart/form-data" method="post">' +
-    //         '<input type="file"  class="form-control" name="file" required>' +
-    //         '<input type="submit" class="form-control" value="Upload">' +
-    //         '</form>'
-    //     );
     });
 
     router.get('/up/file/:id', function (req, res) {
@@ -106,11 +85,9 @@ functions.router = function(router) {
 
             res.set('Content-Type', file.contentType);
             res.set('Content-Disposition', 'attachment; filename="' + file.filename + '"');
-
             var readstream = gfs.createReadStream({
                 _id: file._id
             });
-
             readstream.on("error", function (err) {
                 console.log("Got error while processing stream " + err.message);
                 res.end();
@@ -120,34 +97,23 @@ functions.router = function(router) {
     });
 };
 
-var body = [];
+
 functions.getFile = function(fileId, callback){
+    var body = new Int8Array();
     gfs.findOne({_id: fileId}, function (err, file) {
         var readstream = gfs.createReadStream({
             _id: file._id
         });
-
         readstream.on("error", function (err) {
             console.log("Got error while processing stream " + err.message);
-        
         });
         readstream.on('data', function(chunk){
-
             body.push(chunk);
         });
-
         readstream.on('end', function(){
-            var cunt = new Int8Array(body);
-            // var i = 0;
-            // cunt.map(
-            //     function(){
-            //         i++;
-            //         return body[i];
-            //     });
             console.log("oday "+ cunt.toString());
-            callback(new Int8Array(body), file.filename);
-            });
-        
+            callback(body, file.filename, file.filetype);
+        });
     });
 }
 

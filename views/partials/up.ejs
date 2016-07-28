@@ -4,35 +4,37 @@
 <form style="background-color: powderblue"  action="/up/file" class="form" enctype="multipart/form-data" method="post">
     <input type="file" id="fileID" onchange="previewFile()" class="form-control" name="file">
     <input type="submit" id="fileUpload" class="form-control" value="Upload">
-    <img src="" height="200" alt="Image preview...">
+    <!--<img src="" height="200" alt="Image preview...">-->
     </form>
 
-<script>
-    function previewFile() {
-        var preview = document.querySelector('img');
-        var file    = document.querySelector('input[type=file]').files[0];
-        var reader  = new FileReader();
 
-        reader.onloadend = function () {
 
-            var blob = new Blob([reader.result],{ type: 'audio/mp3'});
+<!--<script>-->
+    <!--function previewFile() {-->
+        <!--var preview = document.querySelector('img');-->
+        <!--var file    = document.querySelector('input[type=file]').files[0];-->
+        <!--var reader  = new FileReader();-->
 
-            upload(blob, "test");
-        }
+        <!--reader.onloadend = function () {-->
 
-        if (file) {
-            reader.readAsArrayBuffer(file);
+            <!--var blob = new Blob([reader.result],{ type: 'audio/mp3'});-->
 
-        }
-    }
-//    $('#fileID').on('change',function(evt){
-//        var inpFiles = $('#fileID');
-//
-//            var size = inpFiles.files.item(0).size;
-//            alert("File Size : " + size);
-//        new Blob(file);
-//        upload(blob, file.name)
-//        console.log("file " + file)
-//        return true;
-//    })
+            <!--upload(blob, "test");-->
+        <!--}-->
+
+        <!--if (file) {-->
+            <!--reader.readAsArrayBuffer(file);-->
+
+        <!--}-->
+    <!--}-->
+<!--//    $('#fileID').on('change',function(evt){-->
+<!--//        var inpFiles = $('#fileID');-->
+<!--//-->
+<!--//            var size = inpFiles.files.item(0).size;-->
+<!--//            alert("File Size : " + size);-->
+<!--//        new Blob(file);-->
+<!--//        upload(blob, file.name)-->
+<!--//        console.log("file " + file)-->
+<!--//        return true;-->
+<!--//    })-->
     </script>

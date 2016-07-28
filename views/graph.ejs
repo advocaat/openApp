@@ -2,32 +2,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>psd3 - Sunburst Chart</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src=".https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+    <title>Statictics</title>
+    <% include partials/sources.ejs %>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 
     <script type="text/javascript" src="/javascripts/psd3.js"></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/psd3.css" />
 </head>
 
-<body style="margin: 15px;">
 
-<div class="container">
-    <div class="well">
-        <h2><a href="../index.html">psd3</a> - Sunburst Chart</h2>
-        <ul>
-            <p><a href="https://github.com/pshivale/psd3/blob/gh-pages/samples/sunburst_chart.html">View source on github</a></p>
-            Going from inside out:
-            <li>Social media platform showing overall total views.</li>
-            <li>Artists tied to that platform showing total views for their songs.</li>
-            <li>Albums tied to the artists showing total views for that Album.</li>
-            <li>Songs tied to the albums showing total views for that song.</li>
-        </ul>
-    </div>
 
+<body>
+<% include partials/header.ejs%>
+<div id="mainBody">
     <div id="chartContainer" class="well"></div>
     <script>var sampleData = [<%- graphy %>];
         console.log(JSON.stringify(sampleData));</script>

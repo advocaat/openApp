@@ -315,7 +315,9 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         //console.log("dataset[j] = " + dataset[j]);
         //console.log("paths.data()[j] = " + paths.data()[j]);
         if (dataset[j][_this.config.inner] !== undefined) {
-            _this.draw(svg, totalRadius, dataset[j][_this.config.inner], originalDataset, originalDatasetLength, innerRadius + radiusDelta, outerRadius + radiusDelta, radiusDelta, paths.data()[j].startAngle, paths.data()[j].endAngle, arc.centroid(paths.data()[j]));
+            _this.draw(svg, totalRadius, dataset[j][_this.config.inner], originalDataset, 
+                originalDatasetLength, innerRadius + radiusDelta, outerRadius + radiusDelta,
+                radiusDelta, paths.data()[j].startAngle, paths.data()[j].endAngle, arc.centroid(paths.data()[j]));
         }
     }
 

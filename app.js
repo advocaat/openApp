@@ -21,9 +21,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash());
-//dbConnect.open();
-// DAO.uploadPost("TITIES", [{myContent: "hello helo heo", myMeta: "purple"},
-//   {myContent: "Goodbye", myMeta: "orange"}]);
 
 
 // view engine setup

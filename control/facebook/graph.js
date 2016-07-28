@@ -32,11 +32,12 @@ functions.getPageAccess = function () {
     });
 }
 
-functions.postPage = function(message, url) {
-    graph.post(url, {message: message}, function(err, res){
+functions.postPage = function(message) {
+    graph.post(urls.facebook, {message: message}, function(err, res){
         console.log("posted " + JSON.stringify(res));
     })
 }
+
 
 
 module.exports = functions;

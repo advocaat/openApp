@@ -1,4 +1,4 @@
-<div id="toolkit">
+<span id="toolkit">
     <h3>Toolkit</h3>
 
     <div class="row">
@@ -6,27 +6,41 @@
             <!--<button class="btn btn-secondary col-xs-12" id="btn_upload">Choose File</button>-->
             <!--<input id="song" type="file" class="hide">-->
             <!--<script>-->
-                <!--$("#btn_upload").click(function (e) {-->
-                    <!--e.preventDefault();-->
-                    <!--$("#song").trigger('click');-->
-                <!--});-->
+            <!--$("#btn_upload").click(function (e) {-->
+            <!--e.preventDefault();-->
+            <!--$("#song").trigger('click');-->
+            <!--});-->
             <!--</script>-->
             <iframe src="/up" frameBorder="0"></iframe>
+            <!--<form style="background-color: powderblue"  action="/up/file" class="form" enctype="multipart/form-data" method="post">-->
+                <!--<input type="file" id="fileID" onchange="previewFile()" class="form-control" name="file">-->
+                <!--<input type="submit" id="fileUpload" class="form-control" value="Upload">-->
+                <!--<img src="" height="200" alt="Image preview...">-->
+    </form>
+
             <div id="uploads" class="empty"></div>
 
         </div>
     </div>
-    <div class="row">
-<span class="col-xs-4 ">
+    <div class="row padTop">
+<span class="col-xs-6 ">
     <button id="addContent" class="toolkitButton btn btn-secondary">Add Block</button>
 </span>
-<span class="col-xs-4 ">
-    <button class="toolkitButton btn btn-secondary">Button2</button>
-</span>
-<span class=" col-xs-4 ">
+
+<span class=" col-xs-6 ">
     <button id="upload" class="toolkitButton btn btn-secondary">Upload</button>
 </span>
-    </div>
+</div>
+    <div class="row padTop">
+        <div class="col-xs-1"></div>
+        <div class="col-xs-10">
+             <span class='input-group date' id='datetimepicker1'>
+                 <input type='text'  class="form-control"/>
+                     <span class=" input-group-addon glyphicon glyphicon-calendar"></span>
+             </span>
+            </div>
+        <div class="col-xs-1"></div>
+</div>
     <div id="checks">
         <div class="row">
             <div class="col-xs-5">
@@ -63,10 +77,11 @@
         </div>
 
     </div>
-    <div class="form-group">
+    <div class="form-group padTop">
         <h5>Block Type</h5>
             <select id="blockType" class="form-control">
                 <option>Flat Content</option>
             </select>
         </div>
 </div>
+</span>
