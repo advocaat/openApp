@@ -10,6 +10,12 @@ functions.schedulePost = function(date, job, message){
    )
 }
 
+functions.scheduleUploadSoundcloud = function(date, job, title, mongoId, list, description, genre){
+   scheduler.scheduleJob(date, function(t, m, l, d, g){
+      return job(t, m ,l ,d, g);
+   }.bind(null,title, mongoId, list, description, genre ));
+}
+
 functions.scheduleDaily = function(offset, job){
    var rule = new scheduler.RecurrenceRule();
    rule.dayOfWeek =[0, new scheduler.Range(1, 6)];

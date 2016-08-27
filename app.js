@@ -12,7 +12,7 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var expressSession = require('express-session');
 var busboy = require('connect-busboy');
-
+var upsc = require('./control/soundcloud/uploadSC');
 var app = express();
 
 

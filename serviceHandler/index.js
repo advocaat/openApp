@@ -1,7 +1,5 @@
 var SC = require('../control/soundcloud');
-
 var functions = {};
-
 
 functions.getTrackDataFromSoundcloud = function(){
     SC.authorizeSC();
@@ -9,7 +7,6 @@ functions.getTrackDataFromSoundcloud = function(){
         SC.getTrackData(tracks);
     });
 }
-
 module.exports = functions;
 
 

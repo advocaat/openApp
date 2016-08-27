@@ -7,19 +7,94 @@
 
 </head>
 <body>
-<% include partials/header.ejs %>
-<div id="mainBody" class="content-fluid">
-    <div class="row">
-        <div class="col-xs-8">
+
+
+<div id="o-wrapper" class="o-wrapper">
+<div class="header">
+    <div class="c-buttons">
+        <div id="c-button--push-left" class="c-button"></div>
+        <img src="images/toolkit.png" id="c-button--slide-right"  style="float: right"/>
+    </div>
+    <div id="logo">
+    <h1 class="logos">open</h1>
+    <img class="logos" src="images/open.png" style="width: 45px; ">
+    <h1 class="logos">records</h1>
+    </div>
+</div>
+    <div id="mainBody" class="content-fluid">
+        <div class="row">
+
             <% include partials/myContent.ejs %>
-        </div>
-        <div class="col-xs-4">
-            <% include partials/toolkit.ejs %>
+
+            <!--<div class="col-xs-4">-->
+            <!--<%# include partials/toolkit.ejs %>-->
+            <!--</div>-->
         </div>
     </div>
-    <%include partials/footer.ejs%>
+    <div id="fb-root"></div>
 </div>
-<div id="fb-root"></div>
+<!-- /o-wrapper -->
+
+<nav id="c-menu--push-left" class="c-menu c-menu--push-left">
+    <button class="c-menu__close">Close Menu</button>
+    <ul class="c-menu__items">
+        <li class="c-menu__item"><a href="/" class="c-menu__link">Home</a></li>
+        <li class="c-menu__item"><a href="signup" class="c-menu__link">Sign Up</a></li>
+        <li class="c-menu__item"><a href="upload" class="c-menu__link">Upload</a></li>
+        <li class="c-menu__item"><a href="stats" class="c-menu__link">Stats</a></li>
+        <li class="c-menu__item"><a href="tracker" class="c-menu__link">Piracy</a></li>
+    </ul>
+</nav>
+
+<nav id="c-menu--slide-right" class="c-menu c-menu--slide-right">
+    <button class="c-menu__close">Close Menu</button>
+    <!--<ul class="c-menu__items">-->
+    <!--&lt;!&ndash;<li class="c-menu__item"><a href="#" class="c-menu__link">Home</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li class="c-menu__item"><a href="#" class="c-menu__link">Sign Up</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li class="c-menu__item"><a href="#" class="c-menu__link">Upload</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li class="c-menu__item"><a href="#" class="c-menu__link">Stats</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li class="c-menu__item"><a href="#" class="c-menu__link">Piracy</a></li>&ndash;&gt;-->
+    <!--</ul>-->
+    <div>
+        <!--<% include partials/toolkit.ejs %>-->
+    </div>
+</nav>
+
+
+<div id="c-mask" class="c-mask"></div>
+
+<script type="text/javascript" src="javascripts/menu.js"></script>
+<script>
+    var pushLeft = new Menu({
+        wrapper: '#o-wrapper',
+        type: 'push-left',
+        menuOpenerClass: '.c-button',
+        maskId: '#c-mask'
+    });
+
+    var slideRight = new Menu({
+        wrapper: '#o-wrapper',
+        type: 'slide-right',
+        menuOpenerClass: '.c-button',
+        maskId: '#c-mask'
+    });
+
+    var pushLeftBtn = document.querySelector('#c-button--push-left');
+    pushLeftBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        pushLeft.open();
+    });
+
+    var slideRightBtn = document.querySelector('#c-button--slide-right');
+    slideRightBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        slideRight.open();
+    });
+
+</script>
+
+
+
 
 <script src="javascripts/upload/contentBlocks.js"></script>
 <script src="javascripts/upload/platforms.js"></script>
@@ -31,4 +106,9 @@
 <script src="javascripts/upload/uploadModel.js"></script></body>
 
 </html>
+
+
+
+
+
 

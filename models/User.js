@@ -24,6 +24,18 @@ module.exports = mongoose.model('User', {
         id: String,
         access_token: String,
         access_token_secret: String
+    },
+    twitter:{
+        id: String,
+        access_token: String,
+        access_token_secret: String
+
+    },
+    youtube: {
+        id: String,
+        access_token: String,
+        access_token_secret: String
+        
     }
 
 });

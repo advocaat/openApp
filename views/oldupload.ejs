@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>Open App</title>
+    <meta charset="utf-8">
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <% include partials/sources.ejs %>
+
+</head>
+<body>
+<% include partials/header.ejs %>
+<div id="mainBody" class="content-fluid">
+    <div class="row">
+        <div class="col-xs-8">
+            <% include partials/myContent.ejs %>
+        </div>
+
+    </div>
+    <% include partials/toolkit.ejs %>
+    <%include partials/footer.ejs%>
+</div>
+<div id="fb-root"></div>
+
+<script src="javascripts/upload/contentBlocks.js"></script>
+<script src="javascripts/upload/platforms.js"></script>
+<script src="javascripts/upload/handleUpload.js"></script>
+<script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script src="javascripts/fbLogin.js"></script>
+<script src="javascripts/scLogin.js"></script>
+<script src="javascripts/upload/uploadModel.js"></script></body>
+
+</html>
+

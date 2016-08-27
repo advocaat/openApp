@@ -9,7 +9,8 @@ $("#addContent").on("click", function () {
 
 function createContentBlock() {
     var myId = "contentBlock" + blocks;
-    var elem = $('<div class="blocko ui-widget-header"><textarea id="' + myId + '" class="form-control" rows="5" cols="90"></textarea><footer min-width="300px" class="feet" height="10" ></footer></div>').insertBefore("#endContent");
+    var elem = $('<div class="blocko ui-widget-header"><textarea id="' + myId + '" class="form-control" rows="5" ></textarea><footer  class="feet" height="10" ></footer></div>').insertBefore("#endContent");
+   
     var block = {
         id: myId,
         content: "",
@@ -97,13 +98,17 @@ function refreshChangedListener() {
                 block.editing = false;
             })
             myBlocks[index].editing = true;
+            $('.soundcloudInputs').css("visibility", "hidden");
+            $('.soundcloudInputs').css("max-height", "0px");
             myBlocks[index].platforms.forEach(function (platform) {
                 $('.platform').each(function () {
                     if (platform == this.name) {
                         $(this).click();
                         testAndSetSelectOptions(this);
                     }
+
                 })
+
                 $("#blockType").val(myBlocks[index].optionValue);
 
             })
@@ -122,6 +127,9 @@ function addTypeOptions(name) {
             console.log("in " + name);
             if ($('#blockType optgroup[label="Soundcloud"]').html() == null)
                 $('#blockType').append(optgroups.sc);
+                $('.soundcloudInputs').css("visibility", "visible");
+                $('.soundcloudInputs').css("max-height", "500px");
+                $('.soundcloudInputs').css("height", "auto");
             break;
         case "youtube":
             console.log("in " + name);
@@ -144,6 +152,8 @@ function removeTypeOptions(name) {
             break;
         case "soundcloud":
             $('#blockType').find('#sc').remove();
+            $('.soundcloudInputs').css("visibility", "hidden");
+            $('.soundcloudInputs').css("max-height", "0px");
             break;
         case "youtube":
             $('#blockType').find('#yt').remove();
@@ -210,3 +220,4 @@ $('#blockType').change(function () {
         }
     })
 })
+

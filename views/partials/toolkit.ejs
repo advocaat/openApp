@@ -1,4 +1,6 @@
-<span id="toolkit">
+<div id="uploads" class="empty"></div>
+<div id="toolkit">
+
     <h3>Toolkit</h3>
 
     <div class="row">
@@ -12,13 +14,41 @@
             <!--});-->
             <!--</script>-->
             <iframe src="/up" frameBorder="0"></iframe>
+
+            <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+            <script src="javascripts/scLogin.js"></script>
+            <!--<form style="background-color: powderblue"  id="uploadForm"class="form" enctype="multipart/form-data" >-->
+            <!--<input type="file" id="fileID"  class="form-control" name="file">-->
+            <!--<input type="submit" id="fileUpload" class="form-control" value="Upload">-->
+            <!--&lt;!&ndash;<img src="" height="200" alt="Image preview...">&ndash;&gt;-->
+            <!--</form>-->
+            <script>
+//                $('#fileUpload').submit(function(evt) {
+//                    console.log("here");
+//                    evt.preventDefault();
+//                    var fd = new FormData($(this)[0]);
+//                    $.ajax({
+//                        url: '/up/file',
+//                        data: fd,
+//                        processData: false,
+//                        contentType: false,
+//                        type: 'POST',
+//                        success: function (data) {
+//                            console.log(data);
+//                        }
+//                    });
+//
+//                });
+
+            </script>
+
             <!--<form style="background-color: powderblue"  action="/up/file" class="form" enctype="multipart/form-data" method="post">-->
                 <!--<input type="file" id="fileID" onchange="previewFile()" class="form-control" name="file">-->
                 <!--<input type="submit" id="fileUpload" class="form-control" value="Upload">-->
                 <!--<img src="" height="200" alt="Image preview...">-->
-    </form>
+    <!--</form>-->
 
-            <div id="uploads" class="empty"></div>
+
 
         </div>
     </div>
@@ -68,11 +98,11 @@
                 </label>
             </div>
             <div class="col-xs-5">
-                <label class="c-input c-checkbox">
-                    <input name="beatport" type="checkbox" id="beatCheck" class="platform">
+                <label  class="c-input c-checkbox">
+                    <input name="twitter" type="checkbox" id="twitCheck" class="platform">
                     <span class="c-indicator"></span>
-                    Beatport
-                </label>
+                   Twitter
+                    </label>
             </div>
         </div>
 
@@ -83,5 +113,94 @@
                 <option>Flat Content</option>
             </select>
         </div>
+
+    <div class="form-group soundcloudInputs">
+        <h5></h5>
+        <input type="text" class="form-control" id="songTitle" placeholder="Title"/>
+        <input type="text" class="form-control" id="description" placeholder="Description">
+        <label for="genre">Genre</label>
+        <select name="genre" id="genre">
+            <option value="trance">Trance</option>
+            <option value="deephouse">Deep House</option>
+        </select>
+
+        <label for="playlist">Playlist</label>
+        <select name="playlist" id="playlist">
+            <option value="listy">Listy</option>
+
+        </select>
+
+
+    </div>
+    <!--YOUTUBE UPLOAD-->
+
+    <br>
+    <br>
+    <br>
+
+     <span id="signinButton" class="pre-sign-in">
+      <span
+              class="g-signin"
+              data-callback="signinCallback"
+              data-clientid="166239123681-ahj4kkcpruvf0hocqktah647kb3ine73.apps.googleusercontent.com"
+              data-cookiepolicy="single_host_origin"
+              data-scope="https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube">
+      </span>
+    </span>
+    <div class="post-sign-in">
+        <div>
+            <img id="channel-thumbnail">
+            <span id="channel-name"></span>
+        </div>
+
+        <div>
+            <label for="videoTitle">Title:</label>
+            <input id="videoTitle" type="text" value="">
+        </div>
+        <div>
+            <label for="videoDescription">Description:</label>
+            <textarea id="videoDescription"></textarea>
+        </div>
+        <div>
+            <label for="privacy-status">Privacy Status:</label>
+            <select id="privacy-status">
+                <option>public</option>
+                <option>unlisted</option>
+                <option>private</option>
+            </select>
+        </div>
+
+        <div>
+
+            <!--<input input type="file" id="file" class="button" accept="video/*">-->
+            <p id="disclaimer">
+                <input type="checkbox" id="disclaimerCheck">
+                By uploading a video, you certify that you own all rights to the content or that you
+                areauthorized by the owner to make the content publicly available on YouTube, and that it otherwise
+                complies with the YouTube Terms of Service located <a href="http://www.youtube.com/t/terms"
+                                                                      target="_blank">HERE</a>
+            </p>
+            <!--<button id="button">Upload Video</button>-->
+            <div class="during-upload">
+                <p><span id="percent-transferred"></span>% done (<span id="bytes-transferred"></span>/<span
+                            id="total-bytes"></span> bytes)</p>
+                <progress id="upload-progress" max="1" value="0"></progress>
+                <!--</div>-->
+
+                <div class="post-upload">
+                    <p>Uploaded video with id <span id="video-id"></span>. Polling for status...</p>
+                    <ul id="post-upload-status"></ul>
+                    <div id="player"></div>
+                </div>
+            </div>
+
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <script src="//apis.google.com/js/client:plusone.js"></script>
+            <script src="javascripts/cors_upload.js"></script>
+            <script src="javascripts/upload_video.js"></script>
+        </div>
+
+    </div>
+
+
 </div>
-</span>

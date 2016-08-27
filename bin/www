@@ -12,6 +12,10 @@ var urls = require('../model/urls');
 var uploads = require('../model/uploads');
 var scheduler = require('../scheduler');
 var serviceHandler = require('../serviceHandler');
+var uploadSC = require('../control/soundcloud/uploadSC');
+var removeFiles = require('../model/uploads/removeFiles');
+var fs = require('fs');
+var twitter = require('../control/twitter');
 /**
  * Get port from environment and store in Express.
  */
@@ -25,29 +29,63 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+
+serviceHandler.getTrackDataFromSoundcloud();
 scheduler.scheduleDaily(6, serviceHandler.getTrackDataFromSoundcloud);
 /**
  * Listen on provided port, on all network interfaces.
  */
 var io = require('socket.io')(server);
 io.on('connection', function(socket){
+
 setInterval(function(){
   if(uploads.added != null){
     process.nextTick(function(){
       socket.emit("update",{ id: uploads.added.toString(), isAudio: uploads.audio});
       console.log("emitted "+ uploads.added + uploads.audio.toString());
-    uploads.added = null;
-    uploads.setAudio(false);
+      uploads.added = null;
+      uploads.setAudio(false);
     })
    }
 }, 1000);
   
   
   socket.on('facebook', function(data){
-    console.log(data.schedule)
+    console.log(data.schedule);
     scheduler.schedulePost(data.schedule ,graph.postPage, data.message);
   });
+
+  socket.on('twitter', function (data) {
+    console.log("emitter twitter" + data.message);
+    scheduler.schedulePost(data.schedule, twitter, data.message);
+  });
+
+  socket.on('soundcloud', function(data){
+
+    scheduler.scheduleUploadSoundcloud(data.schedule, uploadSC.uploadMongo, data.title, data.fileId, data.playlist, data.description, data.genre);
+
+  })
+  
+
+
+
 });
+setInterval(function(){
+  console.log("in remove file");
+  console.log(removeFiles.testFile())
+  if(removeFiles.testFile() != undefined){
+  console.log("removing " +__dirname + "\\..\\"+ removeFiles.testFile());
+      fs.unlink(__dirname + "\\..\\"+ removeFiles.testFile(), function(err, file){
+        if(err){
+          console.log("problem removing file "+ err)
+        }else{
+          console.log("removed file " + file);
+          removeFiles.removeFile();
+        }
+      })
+  }
+}, 10000)
+
 
 server.listen(port);
 server.on('error', onError);

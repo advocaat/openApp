@@ -10,6 +10,9 @@ var DAO = require('../DAO');
 var statsData = require('../control/soundcloud/graphItemBuilder');
 var client;
 var beatport = require('../control/beatport');
+var upsc = require('../control/soundcloud/uploadSC');
+var upfuncs = require('../DAO/up');
+
 artists = require('../model/artists.js');
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
@@ -17,7 +20,7 @@ var isAuthenticated = function (req, res, next) {
 
     res.redirect('/');
 }
-var up = require('../DAO/up').router(router);
+var up = upfuncs.router(router);
 module.exports = function (passport) {
 
 
@@ -69,7 +72,7 @@ module.exports = function (passport) {
     // });
 
     router.get('/auth/facebook', passport.authenticate('facebook', {scope: ['manage_pages', 'publish_pages']}));
-
+        
 
     router.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
@@ -96,7 +99,7 @@ module.exports = function (passport) {
         console.log("a user " + req.user);
         res.redirect('http://localhost:3000/upload');
     })
-    
+    0
     router.get('/beatport', function (req, res) {
         artists.forEach(function (artist) {
             console.log(artist.artistid);
@@ -132,6 +135,38 @@ module.exports = function (passport) {
             res.redirect('/');
         });
 
+    router.get('/auth/twitter', passport.authenticate('twitter'));
+
+    router.get('/auth/twitter/callback', passport.authenticate('twitter',
+        { successRedirect: '/upload',
+            failureRedirect: '/login' }
+        )
+    );
+    router.get('/auth/youtube',
+        passport.authenticate('youtube'));
+
+
+    router.get('/auth/youtube/callback', passport.authenticate('youtube',{ successRedirect: '/upload',
+            failureRedirect: '/pooped'}),
+        function(req, res){
+            console.log("the code"+req.query.code);
+            res.redirect('/');
+        });
+
+    
+    router.get('/accounts', function(req, res){
+        res.render('accounts', {pageName: "dsds", pageDescription: "asddsasd"});
+            
+    })
+
+
+    router.post('/accounts/add', passport.authenticate('signup',
+        { successRedirect: '/accounts',
+            failureRedirect: '/'
+          
+        }))
+
+
     return router;
 }
 
@@ -150,3 +185,20 @@ function redirectHandler(req, res) {
     //     });
 
 }
+
+router.get('/cunt', function(req, res){
+
+    upsc.uploadMongo("track", "5718a039f7cf2c0c2cf8ccf5","listy","sljkhdjs","disco");
+    //upfuncs.getFile("5718a039f7cf2c0c2cf8ccf5", function(stream){
+    //upsc.uploadTrack("track", "5718a039f7cf2c0c2cf8ccf5","listy","sljkhdjs","disco");
+    //});
+
+    res.send("ok");
+
+});
+
+router.get('/playlists', function(req, res){
+    upfuncs.getPlaylists();
+
+    res.send("cunt");
+})

@@ -19,12 +19,21 @@ module.exports = {
         apiSecret: "9ffe194b07c973498aea7ead70803c8d988de3d9",
         accessToken: "1f544268e258fb0efb35a1ee4fc5f92a4fa86949",
         accessTokenSecret: "3bbfcabaf53a123a7899c9cea24b12e6d2eb2a8e",
-        callbackUrl: "http://localhost:3000/auth/beatport/callback" 
+        callbackUrl: "http://localhost:3000/auth/beatport/callback"
+
+    },
+    twitter: {
+        apiKey: "lS5C7ydQcM4bYbjWQrwRkKK74",
+        apiSecret: "j2A185CuTG3dcrxeuFro3hrB98WtZPyv85GsokP4z2nZKmR8gA",
+        callbackUrl: 'http://127.0.0.1:3000/login/twitter/callback'
+    },
+    youtube: {
+        apiKey: "AIzaSyCSCdPMhBLihKO0NfBpaWra5UO29L3k6gU",
+        clientID: "166239123681-ahj4kkcpruvf0hocqktah647kb3ine73.apps.googleusercontent.com",
+        clientSecret: "Jvs_JdwusYGEXZu6bM79gKqm",
+        callbackURL: "http://localhost:3000/auth/youtube/callback",
+        accessToken: "ya29.Ci8zA56jxlJuopPV2eXOZf32rmqiuoq9v1o7a1YWJsroiRqNacHwLAyM_dxqoL27Zg",
+        //authorizationCode: "4/ODO7NOeTrB-m7rCf3Z2BB0LWEIOWxh0wHagXAAvYXxI"
 
     }
-    // twitter: {
-    //     'apikey': '9I081pFvS4nePQJkaZOPvlCFA',
-    //     'apisecret': 'FTeMT7oYxEm1mQtn3OO1aJ3JT3rP9BMWEzso6m70fQdALEkgO6',
-    //     'callbackUrl': 'http://127.0.0.1:3000/login/twitter/callback'
-    // }
 };

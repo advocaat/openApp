@@ -1,5 +1,3 @@
-
-
 var Grid = require('gridfs-stream'); // 1.1.1"
 var data = require('./mongoConnect');
 var mongoose = require('mongoose');
@@ -11,18 +9,15 @@ var gfsSingle = require('../model/gfs');
 var gfs;
 var uploads = require('../model/uploads');
 var fs = require('fs');
-
-
-
-
+var crypto =require("crypto")
 
 functions = {};
 
 
 var myMime;
 
-functions.router = function(router) {
 
+functions.router = function(router) {
     db.open(function (err, data) {
         if (err) throw err;
         console.log("data " + data);
@@ -34,7 +29,8 @@ functions.router = function(router) {
     var Busboy = require('busboy'); 
     var GridStore = mongo.GridStore;
     var ObjectID = require('mongodb').ObjectID;
-    
+
+
     router.get('/up/files/get/:file', function (req, res) {
         new GridStore(db, new ObjectID(req.params.file), null, 'r').open(function (err, GridFile) {
             if (!GridFile) {
@@ -45,10 +41,13 @@ functions.router = function(router) {
         });
     });
 
+
+
     router.post('/up/file', function (req, res) {
         var busboy = new Busboy({headers: req.headers});
         var fileId = new mongo.ObjectId();
         busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+
             console.log('got file', filename, mimetype, encoding);
             var writeStream = gfs.createWriteStream({
                 _id: fileId,
@@ -68,14 +67,16 @@ functions.router = function(router) {
                 uploads.audio = false;
                 uploads.added = fileId;
             }
-          
-            res.render('partials/up')
+            res.render('partials/up');
+
         });
         req.pipe(busboy);
+
     });
 
     router.get('/up', function (req, res) {
-        res.render('partials/up')
+         res.render('partials/up');
+        //res.render('upload');
     });
 
     router.get('/up/file/:id', function (req, res) {
@@ -97,9 +98,38 @@ functions.router = function(router) {
     });
 };
 
+functions.getReadstream =  function(fileId){
+    gfs.findOne({_id: fileId}, function(err, file){
+        var stream = gfs.createReadStream({
+            _id: fileId
+        })
+        
+        return stream;
+    
+    })    
+}
+
+functions.saveFile = function(fileId, callback){
+    gfs.findOne({_id: fileId}, function(err, file){
+        if(err){
+            console.log("saving error" + err);
+            return;
+        }
+       var stream = gfs.createReadStream({
+            _id: fileId
+
+        });
+        stream.on('end', function(){
+            console.log("filename "+ file.filename);
+            callback(file.filename);
+        })
+        var writeStream = fs.createWriteStream(file.filename);
+        stream.pipe(writeStream);
+    });
+}
 
 functions.getFile = function(fileId, callback){
-    var body = new Int8Array();
+        var hash = crypto.createHash('sha256');
     gfs.findOne({_id: fileId}, function (err, file) {
         var readstream = gfs.createReadStream({
             _id: file._id
@@ -108,11 +138,11 @@ functions.getFile = function(fileId, callback){
             console.log("Got error while processing stream " + err.message);
         });
         readstream.on('data', function(chunk){
-            body.push(chunk);
+            hash.update(chunk);
         });
         readstream.on('end', function(){
-            console.log("oday "+ cunt.toString());
-            callback(body, file.filename, file.filetype);
+            console.log("got file" + file.filename);
+            callback(hash, file.filename, file.filetype);
         });
     });
 }

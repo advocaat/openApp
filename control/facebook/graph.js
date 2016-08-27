@@ -1,4 +1,4 @@
-var graph = require('fbgraph');
+   var graph = require('fbgraph');
 var functions = {};
 var http = require('http');
 var urls = require("../../model/urls");
@@ -37,7 +37,12 @@ functions.postPage = function(message) {
         console.log("posted " + JSON.stringify(res));
     })
 }
-
-
+   
+functions.postPhoto = function(photo){
+    graph.post(urls.facebook_photo, {photo: photo}, function(err, res){
+        
+        
+    })
+}   
 
 module.exports = functions;
