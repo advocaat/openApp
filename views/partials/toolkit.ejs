@@ -13,7 +13,7 @@
             <!--$("#song").trigger('click');-->
             <!--});-->
             <!--</script>-->
-            <iframe src="/up" frameBorder="0"></iframe>
+            <iframe src="/up" frameBorder="0"  scrolling="no"></iframe>
 
             <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
             <script src="javascripts/scLogin.js"></script>
@@ -138,7 +138,11 @@
     <br>
     <br>
 
-     <span id="signinButton" class="pre-sign-in">
+
+
+
+    <div class="post-sign-in">
+         <span id="signinButton" class="pre-sign-in">
       <span
               class="g-signin"
               data-callback="signinCallback"
@@ -147,19 +151,19 @@
               data-scope="https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube">
       </span>
     </span>
-    <div class="post-sign-in">
+
         <div>
             <img id="channel-thumbnail">
             <span id="channel-name"></span>
         </div>
 
         <div>
-            <label for="videoTitle">Title:</label>
-            <input id="videoTitle" type="text" value="">
+            <label for="videoTitle">Title</label>
+            <input id="videoTitle" class="form-control" type="text" value="">
         </div>
         <div>
-            <label for="videoDescription">Description:</label>
-            <textarea id="videoDescription"></textarea>
+            <label for="videoDescription">Description</label>
+            <textarea id="videoDescription" class="form-control"></textarea>
         </div>
         <div>
             <label for="privacy-status">Privacy Status:</label>
@@ -194,7 +198,7 @@
                 </div>
             </div>
 
-            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
             <script src="//apis.google.com/js/client:plusone.js"></script>
             <script src="javascripts/cors_upload.js"></script>
             <script src="javascripts/upload_video.js"></script>

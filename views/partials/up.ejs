@@ -1,10 +1,45 @@
 <link href="/stylesheets/bootstrap.min.css"  type="text/css" rel="stylesheet">
 <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
 <script src="javascripts/scLogin.js"></script>
+<style>
+    .btn-file{
+        position: relative;
+        overflow: hidden;
+
+    }
+
+    .btn-file input[type="file"]{
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+
+    }
+    .mybtn{
+        width: 100% !important;
+    }
+</style>
 
 <form style="background-color: powderblue"  action="/up/file" class="form" enctype="multipart/form-data" method="post">
-    <input type="file" id="fileID" onchange="previewFile()" class="form-control" name="file">
-    <input type="submit" id="fileUpload" class="form-control" value="Upload">
+
+    <input id="fileId" type="file"   class="form-control" name="file" >
+
+    <!--<label class="btn btn-primary mybtn" for="fileId">-->
+        <!--<input id="fileID" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">-->
+       <!--Choose File-->
+    <!--</label>-->
+
+        <input type="submit" id="fileUpload" class="form-control" value="Upload">
     <!--&lt;!&ndash;<img src="" height="200" alt="Image preview...">&ndash;&gt;-->
     </form>
 

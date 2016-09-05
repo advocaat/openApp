@@ -9,7 +9,7 @@ $("#addContent").on("click", function () {
 
 function createContentBlock() {
     var myId = "contentBlock" + blocks;
-    var elem = $('<div class="blocko ui-widget-header"><textarea id="' + myId + '" class="form-control" rows="5" ></textarea><footer  class="feet" height="10" ></footer></div>').insertBefore("#endContent");
+    var elem = $('<div class="blocko ui-widget-header"><textarea id="' + myId + '" class="form-control" rows="5" style="width: 650px;" ></textarea><footer  class="feet" height="10" ></footer></div>').insertBefore("#endContent");
    
     var block = {
         id: myId,
@@ -37,7 +37,10 @@ function createContentBlock() {
             droppable = true;
             if(original){
                 var newDiv = $(ui.draggable).clone();
+
+                newDiv.addClass("dropClass");
                 newDiv.draggable({
+
                     stop: function( event, ui ) {
                         if(!droppable)
                             ui.helper.remove();
@@ -65,7 +68,7 @@ function createContentBlock() {
             
         }
     });
-
+    console.log("add radio");
     $('<input type="radio" id="blockSelector' + blocks + '" name="editing" class="radios">').appendTo(elem);
     $('#contentBlock'+ blocks).on("keyup", function(event){
         var tempValue = $(this).val();
@@ -74,7 +77,6 @@ function createContentBlock() {
             if(block.id == id) {
                 block.content = tempValue;
                 console.log(block.id + ": " + block.content);
-
             }
         })
     })
@@ -86,7 +88,6 @@ function createContentBlock() {
 
 function refreshChangedListener() {
     $(".blocko input:radio").off();
-
     $(".blocko input:radio").on("change", function () {
         $("#blockType").children().remove("optgroup");
         $('input:checkbox').removeAttr('checked');
@@ -135,6 +136,8 @@ function addTypeOptions(name) {
             console.log("in " + name);
             if ($('#blockType optgroup[label="YouTube"]').html() == null)
                 $('#blockType').append(optgroups.yt);
+                $('.post-sign-in').show();
+
             break;
         case "beatport":
             console.log("in " + name);
@@ -157,6 +160,8 @@ function removeTypeOptions(name) {
             break;
         case "youtube":
             $('#blockType').find('#yt').remove();
+            $('.post-sign-in').hide();
+            $('.pre-sign-in').hide();
             break;
         case "beatport":
             $('#blockType').find('#bp').remove();

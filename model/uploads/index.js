@@ -11,4 +11,17 @@ functions.setAudio = function(isAudio){
 }
 
 
+functions.returnAdded = function(){
+    if(functions.added != null){
+        console.log("in returnAdded " + functions.added.toString() )
+        return functions.added.toString();
+
+    }else{
+        console.log("in returnAdded " );
+        return null;
+
+    }
+
+};
+
 module.exports = functions;

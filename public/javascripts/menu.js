@@ -32,22 +32,16 @@
     };
 
     Menu.prototype._init = function () {
-        //console.log("hey cunt" + this.options.type);
         this.body = document.body;
         this.wrapper = document.querySelector(this.options.wrapper);
         this.mask = document.querySelector(this.options.maskId);
         this.menu = document.querySelector('#c-menu--' + this.options.type);
-        this.closeBtn = this.menu.querySelector('.c-menu__close');
+        // this.closeBtn = this.menu.querySelector('.c-menu__close');
         this.menuOpeners = document.querySelectorAll(this.options.menuOpenerClass);
         this._initEvents();
     };
 
     Menu.prototype._initEvents = function () {
-        // Event for clicks on the close button inside the menu.
-        this.closeBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            this.close();
-        }.bind(this));
 
         // Event for clicks on the mask.
         this.mask.addEventListener('click', function (e) {

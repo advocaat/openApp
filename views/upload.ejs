@@ -1,3 +1,5 @@
+
+
 <html>
 <head>
     <title>Open App</title>
@@ -13,7 +15,7 @@
 <div class="header">
     <div class="c-buttons">
         <div id="c-button--push-left" class="c-button"></div>
-        <img src="images/toolkit.png" id="c-button--slide-right"  style="float: right"/>
+        <img src="images/toolkit.png" id="c-button--slide-right"  style="float: right;  margin-top: -5px;"/>
     </div>
     <div id="logo">
     <h1 class="logos">open</h1>
@@ -21,7 +23,7 @@
     <h1 class="logos">records</h1>
     </div>
 </div>
-    <div id="mainBody" class="content-fluid">
+    <div  class="content-fluid">
         <div class="row">
 
             <% include partials/myContent.ejs %>
@@ -36,10 +38,10 @@
 <!-- /o-wrapper -->
 
 <nav id="c-menu--push-left" class="c-menu c-menu--push-left">
-    <button class="c-menu__close">Close Menu</button>
+
     <ul class="c-menu__items">
         <li class="c-menu__item"><a href="/" class="c-menu__link">Home</a></li>
-        <li class="c-menu__item"><a href="signup" class="c-menu__link">Sign Up</a></li>
+        <li class="c-menu__item"><a href="accounts" class="c-menu__link">Register</a></li>
         <li class="c-menu__item"><a href="upload" class="c-menu__link">Upload</a></li>
         <li class="c-menu__item"><a href="stats" class="c-menu__link">Stats</a></li>
         <li class="c-menu__item"><a href="tracker" class="c-menu__link">Piracy</a></li>
@@ -56,7 +58,7 @@
     <!--&lt;!&ndash;<li class="c-menu__item"><a href="#" class="c-menu__link">Piracy</a></li>&ndash;&gt;-->
     <!--</ul>-->
     <div>
-        <!--<% include partials/toolkit.ejs %>-->
+        <% include partials/toolkit.ejs %>
     </div>
 </nav>
 
@@ -89,6 +91,7 @@
     slideRightBtn.addEventListener('click', function (e) {
         e.preventDefault();
         slideRight.open();
+
     });
 
 </script>

@@ -110,6 +110,7 @@ functions.getReadstream =  function(fileId){
 }
 
 functions.saveFile = function(fileId, callback){
+    console.log("file id " + fileId);
     gfs.findOne({_id: fileId}, function(err, file){
         if(err){
             console.log("saving error" + err);
