@@ -15,7 +15,7 @@
 <div class="header">
     <div class="c-buttons">
         <div id="c-button--push-left" class="c-button"></div>
-        <img src="images/toolkit.png" id="c-button--slide-right"  style="float: right;  margin-top: -5px;"/>
+        <img src="images/toolkit.png"  class="c-menu__close" id="c-button--slide-right"  style="float: right;  margin-top: -5px;"/>
     </div>
     <div id="logo">
     <h1 class="logos">open</h1>
@@ -43,13 +43,13 @@
         <li class="c-menu__item"><a href="/" class="c-menu__link">Home</a></li>
         <li class="c-menu__item"><a href="accounts" class="c-menu__link">Register</a></li>
         <li class="c-menu__item"><a href="upload" class="c-menu__link">Upload</a></li>
-        <li class="c-menu__item"><a href="stats" class="c-menu__link">Stats</a></li>
+        <li class="c-menu__item"><a href="stats/graph1" class="c-menu__link">Stats</a></li>
         <li class="c-menu__item"><a href="tracker" class="c-menu__link">Piracy</a></li>
     </ul>
 </nav>
 
 <nav id="c-menu--slide-right" class="c-menu c-menu--slide-right">
-    <button class="c-menu__close">Close Menu</button>
+    <!--<button class="c-menu__close">Close Menu</button>-->
     <!--<ul class="c-menu__items">-->
     <!--&lt;!&ndash;<li class="c-menu__item"><a href="#" class="c-menu__link">Home</a></li>&ndash;&gt;-->
     <!--&lt;!&ndash;<li class="c-menu__item"><a href="#" class="c-menu__link">Sign Up</a></li>&ndash;&gt;-->
@@ -67,6 +67,20 @@
 
 <script type="text/javascript" src="javascripts/menu.js"></script>
 <script>
+
+//    $('#c-button--slide-right').on('click', function(e){
+//        e.preventDefault();
+//        if($('#c-menu--slide-right').hasClass('is-active')) {
+//            $('body').removeClass('has-active-menu');
+//            $('#c-menu--slide-right').removeClass('is-active');
+//            $('#o-wrapper').removeClass('has-slide-right');
+//            $('#c-mask').removeClass('is-active');
+//                window.Menu.close();
+//        }
+//    })
+    var panelOpen = false;
+    var menuOpen = false;
+
     var pushLeft = new Menu({
         wrapper: '#o-wrapper',
         type: 'push-left',
@@ -83,14 +97,28 @@
 
     var pushLeftBtn = document.querySelector('#c-button--push-left');
     pushLeftBtn.addEventListener('click', function (e) {
+
         e.preventDefault();
-        pushLeft.open();
+        if(menuOpen == false) {
+            pushLeft.open();
+            menuOpen = true;
+        }else{
+            pushLeft.close();
+            menuOpen = false;
+        }
     });
 
     var slideRightBtn = document.querySelector('#c-button--slide-right');
     slideRightBtn.addEventListener('click', function (e) {
         e.preventDefault();
-        slideRight.open();
+        if(panelOpen == false) {
+
+            slideRight.open();
+            panelOpen = true;
+        }else{
+            slideRight.close();
+            panelOpen = false;
+        }
 
     });
 
@@ -107,7 +135,19 @@
 <script src="javascripts/fbLogin.js"></script>
 <script src="javascripts/scLogin.js"></script>
 <script src="javascripts/upload/uploadModel.js"></script></body>
+<script>
+    $('#addContent').click();
 
+    $(document).ready(function () {
+        try {
+            $('#blockSelector0').prop("checked", true);
+        }catch(err){
+            console.log("block err " +err);
+        }
+    });
+
+
+    </script>
 </html>
 
 

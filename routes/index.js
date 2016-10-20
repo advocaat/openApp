@@ -12,7 +12,7 @@ var client;
 var beatport = require('../control/beatport');
 var upsc = require('../control/soundcloud/uploadSC');
 var upfuncs = require('../DAO/up');
-
+var ytfuncs = require('../control/youtube/getStats');
 artists = require('../model/artists.js');
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
@@ -99,7 +99,7 @@ module.exports = function (passport) {
         console.log("a user " + req.user);
         res.redirect('http://localhost:3000/upload');
     })
-    0
+    
     router.get('/beatport', function (req, res) {
         artists.forEach(function (artist) {
             console.log(artist.artistid);
@@ -108,20 +108,49 @@ module.exports = function (passport) {
         res.redirect('/')
     })
 
-    router.get('/stats', function (req, res) {
+    router.get('/stats/:graph', function (req, res) {
+        var graphOption = req.params.graph;
+        console.log("parameter " + graphOption);
         var data = [];
-        DAO.pullStats(function (stats) {
-            console.log("pooper " + stats)
-            statsData.buildGraphObject(stats, function (graph) {
-                //data.push[graph];
-                res.render('graph', {
-                    graphy: JSON.stringify(graph),
-                    pageName: 'Statistics',
-                    pageDescription: 'Statistics generated from services'
+        switch(graphOption.toString().trim()) {
+            case "graph1":
+            DAO.pullStats(function (stats) {
+                    console.log("qwqewqw");
+                    statsData.buildGraphObject(stats, function (graph) {
+                        //data.push[graph];
+                        res.render('graph1', {
+                            graphy: JSON.stringify(graph),
+                            // locationViews: "[]",
+                            pageName: 'Statistics',
+                            pageDescription: 'Statistics generated from services'
+                        });
+                    });
+                })
+                break;
+            case "graph2":
+                DAO.getYoutubeViews(function(data){
+                    res.render('graph2',{
+                        graphy: "[]",
+                        videoTitles: JSON.stringify(data.titleArray),
+                        locationViews: JSON.stringify(data.dataArray),
+                        pageName: 'Statistics',
+                        pageDescription: 'Statistics generated from services'
+                    })
                 });
-            });
-        })
+                break;
 
+            case "graph3":
+                DAO.getYoutubeViews(function(data){
+                    res.render('graph3',{
+                        graphy: "[]",
+                        videoTitles: JSON.stringify(data.titleArray),
+                        locationViews: JSON.stringify(data.dataArray),
+                        pageName: 'Statistics',
+                        pageDescription: 'Statistics generated from services'
+                    })
+                });
+                break;
+        }
     })
 
     router.get('/auth/beatport',
@@ -139,19 +168,15 @@ module.exports = function (passport) {
 
     router.get('/auth/twitter/callback', passport.authenticate('twitter',
         { successRedirect: '/upload',
-            failureRedirect: '/login' }
-        )
-    );
-    router.get('/auth/youtube',
-        passport.authenticate('youtube'));
+            failureRedirect: '/login'
+        }));
+
+    router.get('/auth/youtube', passport.authenticate('youtube'));
 
 
-    router.get('/auth/youtube/callback', passport.authenticate('youtube',{ successRedirect: '/upload',
-            failureRedirect: '/pooped'}),
-        function(req, res){
-            console.log("the code"+req.query.code);
-            res.redirect('/');
-        });
+    router.get('/auth/youtube/callback',
+            passport.authenticate('youtube',{successRedirect: '/upload', failureRedirect: '/login'}));
+
 
     
     router.get('/accounts', function(req, res){
@@ -188,11 +213,20 @@ function redirectHandler(req, res) {
 
 router.get('/cunt', function(req, res){
 
-    upsc.uploadMongo("track", "5718a039f7cf2c0c2cf8ccf5","listy","sljkhdjs","disco");
+    //upsc.uploadMongo("track", "5718a039f7cf2c0c2cf8ccf5","listy","sljkhdjs","disco");
     //upfuncs.getFile("5718a039f7cf2c0c2cf8ccf5", function(stream){
     //upsc.uploadTrack("track", "5718a039f7cf2c0c2cf8ccf5","listy","sljkhdjs","disco");
     //});
+    try {
+        ytfuncs.getVideoIDs(function(data, titles){
+            DAO.insertRegionViews(data, titles);
 
+        })
+
+    }catch(err){
+        console.log("mine error" +err);
+
+    }
     res.send("ok");
 
 });

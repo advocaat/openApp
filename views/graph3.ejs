@@ -1,0 +1,297 @@
+<html>
+<head>
+    <title>Open App</title>
+    <meta charset="utf-8">
+    <% include partials/sources.ejs %>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src=".https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <!--<script type="text/javascript" src="../javascripts/psd3.js"></script>-->
+    <!--<link rel="stylesheet" type="text/css" href="../stylesheets/psd3.css" />-->
+    <script type="text/javascript" src="../javascripts/countryCodes.js"></script>
+    <style>
+        .header{
+            position: relative;
+
+
+        }
+    </style>
+
+</head>
+<body>
+
+<div id="o-wrapper" class="o-wrapper">
+    <div class="header">
+        <div class="c-buttons">
+            <div id="c-button--push-left" class="c-button"></div>
+            <img src="../images/toolkit.png" class="c-button__close" id="c-button--slide-right"  style="float: right;  margin-top: -5px;"/>
+        </div>
+
+        <div id="logo">
+            <h1 class="logos">open</h1>
+            <img class="logos" src="../images/open.png" style="width: 45px; ">
+            <h1 class="logos">records</h1>
+        </div>
+    </div>
+    <div id="container">
+
+            <div id="chartContainer" style="width: 100%"></div>
+
+
+        <div id="graph2" class="well" style="display: none; margin-top: 60px;">
+            <div id="regions_div"></div>
+        </div>
+        <div id="graph3" class="middle" style="margin-top: 160px; width: 70%;">
+            <div id="barchart_values" style="margin: 0 auto"></div>
+        </div>
+    </div>
+
+    <!--<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
+
+        <!--<script src="../javascripts/buildGraph.js" ></script>-->
+        <script>
+            var sampleData = [<%-graphy%>];
+            var mapData = [<%- locationViews %>];
+            var titles = [<%- videoTitles %>]
+            if(!localStorage.videoIndex) {
+                localStorage.setItem("videoIndex", 0);
+            }
+            var topOffset = 160;
+            var graphHeight;
+            google.charts.load('current', {'packages': ['geochart','corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+             $('#graph1').css('display', 'none');
+             $('#graphOption1').css('visibility', 'hidden')
+             $('#graph2').css('display', 'none');
+             $('#graphOption2').css('visibility', 'hidden')
+             $('#graph3').css('display', 'block');
+             $('#graphOption3').css('visibility', 'visible')
+
+             function appendRole(md){
+                 var data = [];
+                 if(md.length < 17){
+                     graphHeight = 800;
+                     topOffset = "20px";
+                 }else if(md.length < 30){
+                     graphHeight = 1200;
+                     topOffset = "-50px";
+                }else if(md.length < 40){
+                     graphHeight = 1800;
+                        topOffset = "-90px";
+                 }else if(md.length < 60){
+                     graphHeight = 2200 ;
+                     topOffset = "-170px";
+                 }
+                 else if(md.length < 80 ){
+                    graphHeight = 2500;
+                     topOffset = "-200px";
+                 }else if(md.length < 100){
+                     graphHeight = 2900;
+                     topOffset = "-240px"
+                 }else if(md.length < 120){
+                     graphHeight = 3200;
+                 }else if(md.length < 140){
+                     graphHeight = 3400;
+                     topOffset = "-360px";
+                 }else if(md.length < 160 ){
+                     graphHeight = 3800;
+                     topOffset = "-480px;"
+                 }else if(md.length < 180 ){
+                     graphHeight = 4200;
+                     topOffset = "580px";
+                 }else if(md.length < 200 ){
+                     graphHeight = 4600;
+                     topOffset = "680px";
+                 }else if(md.length < 220 ){
+                     graphHeight = 5000;
+                     topOffset = "780px";
+                 }else{
+                     graphHeight = 5400;
+                     topOffset = "980px";
+                 }
+                 console.log(Object.keys(countryCodes).length);
+                 console.log(md.length)
+                 for(var i = 0; i < md.length; i++){
+                     if(i == 0){
+                         data.push(md[i]);
+                         data[i].push({role: 'style'});
+                         console.log("label");
+                     }
+                     else{
+
+                             data.push(md[i]);
+                             console.log(data[i][0])
+
+                             data[i][0] = getCountryName(data[i][0]);
+                             data[i].push('#5681C2');
+
+                             console.log("item");
+
+
+                     }
+
+
+                 }
+                return data;
+
+             }
+             var formattedData = appendRole(mapData[0][localStorage.videoIndex]);
+
+
+             function drawChart() {
+                 var data = google.visualization.arrayToDataTable(formattedData);
+                 console.log("data "+ JSON.stringify(formattedData));
+                 var view = new google.visualization.DataView(data);
+                 view.setColumns([0, 1,
+                     { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                     2]);
+
+                 var options = {
+                     title: $('#titleSelect option[value='+ localStorage.videoIndex +']').text(),
+                     titleTextStyle: {
+                         color: "red",
+                         fontSize: 18,
+                         bold: false,
+                         italic: true
+                     },
+                     hAxis: {},
+                     width: 1000,
+                     height: graphHeight,
+                     bar: {groupWidth: "95%"},
+                     legend: { position: "none" },
+                 };
+                 options.hAxis.textPosition = "in";
+                 options.hAxis.title = "Views";
+                 var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+                 chart.draw(view, options);
+             }
+
+            function getCountryName(code){
+                if(countryCodes[code]){
+                    return countryCodes[code]["name"];
+                }else{
+                    return code;
+                }
+
+            }
+
+            var panelOpen  = false;
+            var menuOpen = false;
+
+            var pushLeftBtn = document.querySelector('#c-button--push-left');
+            pushLeftBtn.addEventListener('click', function (e) {
+
+                e.preventDefault();
+                if(menuOpen == false) {
+                    pushLeft.open();
+                    menuOpen = true;
+                }else{
+                    pushLeft.close();
+                    menuOpen = false;
+                }
+            });
+
+            var slideRightBtn = document.querySelector('#c-button--slide-right');
+            slideRightBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                if(panelOpen == false) {
+
+                    slideRight.open();
+                    panelOpen = true;
+                }else{
+                    slideRight.close();
+                    panelOpen = false;
+                }
+
+            });
+            function buildSelect() {
+                var titleSelect = "<select id='titleSelect' class='form-control' style='margin-top: 100px;margin-left:10%;width: 80%;'>";
+                for (var i = 0; i < titles[0].length -1; i++) {
+                    titleSelect += "<option value='" + i + "'>" + titles[0][i] + "</option>";
+                    console.log("titles " + titles[0][i]);
+                }
+                titleSelect += "</select>"
+                console.log(titleSelect);
+                return titleSelect;
+            }
+
+            function selectOption(){
+                $('#titleSelect').val(localStorage.videoIndex);
+            }
+            function setFromTop(){
+                    $('#graph3').css('margin-top', topOffset);
+
+
+            }
+    </script>
+</div>
+</div>
+<!-- /o-wrapper -->
+
+<nav id="c-menu--push-left" class="c-menu c-menu--push-left">
+
+    <ul class="c-menu__items">
+        <li class="c-menu__item"><a href="../" class="c-menu__link">Home</a></li>
+        <li class="c-menu__item"><a href="../accounts" class="c-menu__link">Register</a></li>
+        <li class="c-menu__item"><a href="../upload" class="c-menu__link">Upload</a></li>
+        <li class="c-menu__item"><a href="../stats/graph1" class="c-menu__link">Stats</a></li>
+        <li class="c-menu__item"><a href="../tracker" class="c-menu__link">Piracy</a></li>
+    </ul>
+</nav>
+
+<div id="c-menu--slide-right" class="c-menu c-menu--slide-right">
+    <div class="row" style="width: 80%; margin: 80px auto; text-align: center; ">
+
+        <div class="col-xs-6"><a href="/stats/graph1" class="form-control">Soundcloud</a></div>
+        <div class="col-xs-6"><a href="/stats/graph2" class="form-control">Youtube Map</a></div>
+        <div class="col-xs-3" push-down></div>
+        <div class="col-xs-6 push-down"><a href="/stats/graph3" class="form-control">Youtube Chart</a></div>
+    </div>
+    </div>
+<script>
+    $('#c-menu--slide-right').append(buildSelect());
+    $('#titleSelect').on('change', function(e){
+        e.preventDefault();
+        console.log("val "+ parseInt($('#titleSelect').val()));
+        localStorage.setItem("videoIndex",  parseInt($('#titleSelect').val()));
+//        formattedData = appendRole(mapData[0][localStorage.videoIndex]);
+//        drawChart();
+        location.reload();
+    })
+</script>
+
+
+<div id="c-mask" class="c-mask"></div>
+
+<script type="text/javascript" src="../javascripts/menu.js"></script>
+<script>
+    var pushLeft = new Menu({
+        wrapper: '#o-wrapper',
+        type: 'push-left',
+        menuOpenerClass: '.c-button',
+        maskId: '#c-mask'
+    });
+
+    var slideRight = new Menu({
+        wrapper: '#o-wrapper',
+        type: 'slide-right',
+        menuOpenerClass: '.c-button',
+        maskId: '#c-mask'
+    });
+
+    selectOption();
+    setFromTop();
+</script>
+
+
+
+</body>
+</html>

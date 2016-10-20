@@ -1,7 +1,7 @@
 var config = {
     containerId: "chartContainer",
-    width: 500,
-    height: 500,
+    width: 600,
+    height: 600,
     data: sampleData,
     heading: {
         text: "Stats from Social Media",
@@ -13,9 +13,11 @@ var config = {
     value: "number",
     name: "name",
     inner: "drilldown",
-    transition: "bounce",
-    transitionDuration: 1000,
+    transition: "fade-in",
+    transitionDuration: 200,
     donutRadius: 75
 };
 
+
 var samplePie = new psd3.Pie(config);
+

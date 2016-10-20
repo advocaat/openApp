@@ -9,8 +9,8 @@ $("#addContent").on("click", function () {
 
 function createContentBlock() {
     var myId = "contentBlock" + blocks;
-    var elem = $('<div class="blocko ui-widget-header"><textarea id="' + myId + '" class="form-control" rows="5" style="width: 650px;" ></textarea><footer  class="feet" height="10" ></footer></div>').insertBefore("#endContent");
-   
+    var elem = $('<div class="blocko panel-body"><textarea id="' + myId + '" class="form-control" rows="5" style="width: 650px;" ></textarea><footer class="feet" height="10" ></footer></div>').insertBefore("#endContent");
+// <div class="panel panel-default ui-widget-header"><div class="panel-heading"></div>
     var block = {
         id: myId,
         content: "",
@@ -69,9 +69,9 @@ function createContentBlock() {
         }
     });
     console.log("add radio");
-    $('<input type="radio" id="blockSelector' + blocks + '" name="editing" class="radios">').appendTo(elem);
+    $('<input type="radio" id="blockSelector' + blocks + '" name="editing" class="radios"><label for="blockSelector' + blocks + '"radio02"><span></span></label>').appendTo(elem);
     $('#contentBlock'+ blocks).on("keyup", function(event){
-        var tempValue = $(this).val();
+        var tempValue = $(this).val();[0]
         var id = event.target.id;
         myBlocks.forEach(function(block){
             if(block.id == id) {
@@ -89,6 +89,7 @@ function createContentBlock() {
 function refreshChangedListener() {
     $(".blocko input:radio").off();
     $(".blocko input:radio").on("change", function () {
+        console.log("change");
         $("#blockType").children().remove("optgroup");
         $('input:checkbox').removeAttr('checked');
         if (this.checked) {
@@ -101,6 +102,8 @@ function refreshChangedListener() {
             myBlocks[index].editing = true;
             $('.soundcloudInputs').css("visibility", "hidden");
             $('.soundcloudInputs').css("max-height", "0px");
+            $('.youtubeInputs').css("visibility", "hidden");
+            $('.youtubeInputs').css("max-height", "0px");
             myBlocks[index].platforms.forEach(function (platform) {
                 $('.platform').each(function () {
                     if (platform == this.name) {
@@ -116,6 +119,9 @@ function refreshChangedListener() {
         }
     });
 }
+
+
+
 function addTypeOptions(name) {
     console.log("type add " + name);
     switch (name) {
@@ -136,7 +142,10 @@ function addTypeOptions(name) {
             console.log("in " + name);
             if ($('#blockType optgroup[label="YouTube"]').html() == null)
                 $('#blockType').append(optgroups.yt);
-                $('.post-sign-in').show();
+                $('.youtubeInputs').css("visibility", "visible");
+                $('.youtubeInputs').css("max-height", "500px");
+                $('.syoutubeInputs').css("height", "auto");
+                // $('.post-sign-in').show();
 
             break;
         case "beatport":
@@ -160,8 +169,10 @@ function removeTypeOptions(name) {
             break;
         case "youtube":
             $('#blockType').find('#yt').remove();
-            $('.post-sign-in').hide();
-            $('.pre-sign-in').hide();
+            $('.youtubeInputs').css("visibility", "hidden");
+            $('.youtubeInputs').css("max-height", "0px");
+            // $('.post-sign-in').hide();
+            // $('.pre-sign-in').hide();
             break;
         case "beatport":
             $('#blockType').find('#bp').remove();
@@ -182,7 +193,7 @@ function testAndSetSelectOptions(thing) {
 optgroups = {
     fb: '<optgroup id="fb" label="Facebook"><option val="1">Image</option></optgroup>',
     sc: '<optgroup id="sc" label="Soundcloud"><option val="2">Image</option><option val="3">Audio</option></optgroup>',
-    yt: '<optgroup id="yt" label="YouTube"><option val="4">Image</option><option val="5">Potato</optionval></optgroup>',
+    yt: '<optgroup id="yt" label="YouTube"><option val="4">Video</option></optgroup>',
     bp: '<optgroup id="bp" label="Beatport"><option val="6">Image</option><option val="7">Potato</option></optgroup>'
 }
 
@@ -215,8 +226,10 @@ $('#blockType').change(function () {
                 $('.blocko #' + block.id).css({"visibility": "hidden"});
                 $('.blocko #' + block.id).rows = "2";
                 //$('.blocko  #' + block.id).parent().css({"min-height": "400px", "min-width": "600px"});
-            }else if($('#blockType option:selected').text() == "Audio"){
+            }else if($('#blockType option:selected').text() == "Audio") {
                 block.option = "audio";
+            }else if($('#blockType option:selected').text() == "Video"){
+                block.option = "video";
             } else {
                 block.option = "text";
                 $('.blocko #' + block.id).css({"visibility": "visible"});
@@ -226,3 +239,8 @@ $('#blockType').change(function () {
     })
 })
 
+$(document).ready(function(){
+    
+        myBlocks[0].editing = true;
+
+})

@@ -14,7 +14,7 @@ function updatePlatforms(){
                     block.platforms.push(this.name);
                 }
             });
-            console.log(block.platforms.toString());
+            console.log(block.platforms.toString());  
         }
     })
 

@@ -34,7 +34,9 @@ module.exports = mongoose.model('User', {
     youtube: {
         id: String,
         access_token: String,
-        access_token_secret: String
+        access_token_secret: String,
+        refresh_token: String,
+        expires_in: Number
         
     }
 

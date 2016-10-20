@@ -16,6 +16,10 @@ var uploadSC = require('../control/soundcloud/uploadSC');
 var removeFiles = require('../model/uploads/removeFiles');
 var fs = require('fs');
 var twitter = require('../control/twitter');
+var removeFiles = require('../model/uploads/removeFiles');
+var youtube = require('../control/youtube/getStats')
+
+
 /**
  * Get port from environment and store in Express.
  */
@@ -53,7 +57,17 @@ setInterval(function(){
   
   socket.on('facebook', function(data){
     console.log(data.schedule);
-    scheduler.schedulePost(data.schedule ,graph.postPage, data.message);
+    console.log("ids "+ data.images[0]);
+    if(typeof data.images[0] !== 'undefined' && typeof data.images[0] !== null && data.images.length > 1){
+      console.log("scheding fb photo")
+
+      scheduler.scheduleFBPostWithPhoto(data.schedule, graph.postPhoto,data.message, data.images[0] );
+
+    }else {
+      console.log("scheding fb  message");
+      scheduler.schedulePost(data.schedule, graph.postPage, data.message);
+    }
+
   });
 
   socket.on('twitter', function (data) {
@@ -65,6 +79,10 @@ setInterval(function(){
 
     scheduler.scheduleUploadSoundcloud(data.schedule, uploadSC.uploadMongo, data.title, data.fileId, data.playlist, data.description, data.genre);
 
+  })
+  
+  socket.on("youtube", function(data){
+    scheduler.scheduleUploadYoutube(data.schedule, youtube.uploadVideo, data.videoId, data.title ,data.description, data.keywords)
   })
   
 

@@ -9,11 +9,12 @@ body {
 }
 .clearBack {
   background:transparent;
-
 }
+
 a {
   color: #00B7FF;
 }
+
 #mainBody{
 
   padding-left: 30px;
@@ -37,21 +38,26 @@ input[type=text], input[type=password]{
   margin-top: 15px;
 
 }
+
 .accountPanel {
-
-
     text-align: center;
-
 }
+
 #section{
   position: absolute;
   top: 120px;
+  left: 40px;
   overflow-y: hidden;
+  /*border: 1px solid gray;*/
+  /*background-color: gray;*/
+  /*border-radius: 20px;*/
 
 }
+
 #section .form-control{
   margin: auto;
   width: 80%;
+
 }
 
 
@@ -106,11 +112,11 @@ height: 30px;
 
 }
 
-.radios{
+.radios + label{
   position: relative;
 
   top: -145px;
-  left: 715px;
+  left: 695px;
 }
 
 .hoverClass{
@@ -128,12 +134,27 @@ height: 30px;
   min-height: 24px;
   width:650px;
   margin: auto;
+    border-left: 1px solid dimgrey;
+    border-right: 1px solid dimgrey;
+    border-bottom: 1px solid dimgrey;
 }
 
 .blocko{
   display: block;
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
   width: 750px;
+    border: 1px solid dimgrey;
+   padding-right: 40px;
+    background-color: lightyellow;
+
+
+
+}
+.blocko textarea{
+    border-left: 1px solid dimgrey;
+    border-right: 1px solid dimgrey;
+    border-top: 1px solid dimgrey;
+
 }
 body, html{
   padding: 0;
@@ -223,6 +244,7 @@ iframe{
   overflow-y: hidden;
   border-top: 1px solid #78909C;
 
+
 }
 
 .desc{
@@ -254,24 +276,44 @@ iframe{
     padding: 10px;
     border-radius: 4px;
 }
+.youtubeInputs{
+  visibility: hidden;
+  max-height: 0px;
+  border: 1px solid grey;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+
 .soundcloudInputs input{
     margin-top: 8px;
     margin-bottom: 8px;
 }
-
+.youtubeInputs input{
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
 .soundcloudInputs select{
   width: 100%;
   margin-bottom: 8px;
+
 }
 
+.push-down{
+    margin-top: 20px;
 
+}
+.middle{
+    margin: 0 auto;
+
+}
 /*******************************************************************slide menu css*******************************************************/
 
 .c,
 .c-menu {
   position: fixed;
   z-index: 200;
-  background-color: #67b5d1;
+  background-color: whitesmoke;
   -webkit-transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
 }
@@ -286,7 +328,13 @@ iframe{
   overflow: visible;
 
 }
+.c-menu--push-left{
+    background-color: #67b5d1 !important;
 
+}
+.c-menu--slide-right{
+    border-left: 1px solid dimgrey;
+}
 .c-menu--slide-right,
 .c-menu--push-left {
   width: 100%;
@@ -304,10 +352,15 @@ iframe{
 .c-menu--push-left .c-menu__item {
   display: block;
   text-align: center;
+  width: 100%;
+  height: 20%;
   border-top: solid 1px #b5dbe9;
   border-bottom: solid 1px #3184a1;
 }
-
+.c-menu--push-left .c-menu__item a{
+    padding-top: 10%;
+    height: 100%;
+}
 .c-menu--slide-right .c-menu__item:first-child,
 .c-menu--push-left .c-menu__item:first-child {
   border-top: none;
@@ -396,7 +449,6 @@ body.has-active-menu {
 }
 
 .c-menu__close {
-  visibility: hidden;
   color: #fff;
   background-color: #3184a1;
   font-size: 14px;
@@ -428,6 +480,7 @@ body.has-active-menu {
   opacity: 0;
   -webkit-transition: opacity 0.3s, width 0s 0.3s, height 0s 0.3s;
   transition: opacity 0.3s, width 0s 0.3s, height 0s 0.3s;
+
 }
 
 .c-mask.is-active {
@@ -473,7 +526,15 @@ h1.logos{
 .c-buttons {
   padding: 1em;
 }
+.c-menu__link{
+    font-size: 22px;
 
+}
+.c-menu__link:hover{
+    background-color: darkslategrey;
+    text-decoration: none;
+    color: darkgray;
+}
 /********************YOUTUBE UPLOAD*************************/
 #channel-image {
   width: 2em;
@@ -553,4 +614,44 @@ textarea {
   border-bottom: 1px solid black;
   z-index: 4000;
   background-color: white;
+}
+
+
+
+
+
+input[type="radio"] {
+    display:none;
+}
+input[type="radio"] + label {
+    color: #292321;
+    font-family:Arial, sans-serif;
+    font-size:14px;
+}
+input[type="radio"] + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+    cursor:pointer;
+    -moz-border-radius:  50%;
+    border-radius:  50%;
+}
+
+input[type="radio"] + label span {
+    background-color:#292321;
+}
+
+input[type="radio"]:checked + label span{
+    background-color:greenyellow;
+    border: 1px solid black;
+}
+
+input[type="radio"] + label span,
+input[type="radio"]:checked + label span {
+    -webkit-transition:background-color 0.4s linear;
+    -o-transition:background-color 0.4s linear;
+    -moz-transition:background-color 0.4s linear;
+    transition:background-color 0.4s linear;
 }

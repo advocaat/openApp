@@ -16,6 +16,13 @@ functions.scheduleUploadSoundcloud = function(date, job, title, mongoId, list, d
    }.bind(null,title, mongoId, list, description, genre ));
 }
 
+functions.scheduleFBPostWithPhoto = function(date, job, message, photoId){
+   scheduler.scheduleJob(date, function(p,m){
+      return job(p, m);
+   }.bind(null,photoId,  message));
+
+}
+
 functions.scheduleDaily = function(offset, job){
    var rule = new scheduler.RecurrenceRule();
    rule.dayOfWeek =[0, new scheduler.Range(1, 6)];
@@ -28,5 +35,9 @@ functions.scheduleDaily = function(offset, job){
    });
    console.log("job " + JSON.stringify(j));
 }
-
+functions.scheduleUploadYoutube = function(date, job, mongoId, title ,description, keywords){
+   scheduler.scheduleJob(date, function(m, t, d, k){
+      return job(m,t,d,k);
+   }.bind(null, mongoId, title,description, keywords ));
+}
 module.exports = functions;

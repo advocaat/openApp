@@ -28,12 +28,9 @@ module.exports = {
         callbackUrl: 'http://127.0.0.1:3000/login/twitter/callback'
     },
     youtube: {
-        apiKey: "AIzaSyCSCdPMhBLihKO0NfBpaWra5UO29L3k6gU",
-        clientID: "166239123681-ahj4kkcpruvf0hocqktah647kb3ine73.apps.googleusercontent.com",
-        clientSecret: "Jvs_JdwusYGEXZu6bM79gKqm",
-        callbackURL: "http://localhost:3000/auth/youtube/callback",
-        accessToken: "ya29.Ci8zA56jxlJuopPV2eXOZf32rmqiuoq9v1o7a1YWJsroiRqNacHwLAyM_dxqoL27Zg",
-        //authorizationCode: "4/ODO7NOeTrB-m7rCf3Z2BB0LWEIOWxh0wHagXAAvYXxI"
-
+        apiKey: "AIzaSyBLLVgtOM_oeSrT4Nd5zKBHwl1cHmEBzwA",
+        clientID: "714667854820-5c18c9fkim668gk6jqr457flfvfe2f7f.apps.googleusercontent.com",
+        clientSecret: "QSkesSsAt4bIXPkBb4tal2x2",
+        callbackURL: "http://localhost:3000/auth/youtube/callback"
     }
 };

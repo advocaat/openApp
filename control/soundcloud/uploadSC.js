@@ -27,13 +27,12 @@ functions.uploadTrack = function(title, id, list, description, genre) {
         }
              try {
                 scUpload.addTrack(title, description, genre, source).then(function (track) {
-                   console.log("adding");
+                    console.log("adding");
                     playList.setHeader("Content-Length", myLen());
                     playList.addTrack(track);
                 });
             }catch(err){
                 console.log("upload error "+ err);
-
             }
         })
 }
@@ -43,8 +42,6 @@ functions.uploadTrack = function(title, id, list, description, genre) {
 functions.uploadMongo = function(title, mongoId, list, description, genre) {
     console.log('mongo id: ' + mongoId);
     up.saveFile(mongoId, function(filename){
-
-
         var scUpload = new sc(config.soundcloud.clientID, config.soundcloud.clientSecret, 'bobproman', 'advocaat', config.soundcloud.callbackURL);
         scUpload.playlists().then(function (playlist) {
             try {
@@ -63,23 +60,14 @@ functions.uploadMongo = function(title, mongoId, list, description, genre) {
                 scUpload.addTrack(title, description, genre, source).then(function (track) {
                     console.log("adding");
                     playList.setHeader("Content-Length", myLen());
-
                     playlist.addTrack(track);
-                    
-
-                    
                 });
             }catch(err){
                 console.log("upload error "+ err);
-
             }
             removeFiles.addFile(filename);
         })
-
     })
-
-
-
 }
 
 function handleUpload(filename, callback){

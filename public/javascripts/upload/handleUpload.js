@@ -24,8 +24,7 @@ $("#upload").on("click", function () {
         soundcloud.fileId;
         soundcloud.update = false;
         youtube.schedule = date;
-        youtube.message = "";
-        youtube.images = [];
+        youtube.videos = [];
         youtube.update = false;
         twitter.schedule = date;
         twitter.message = "";
@@ -33,16 +32,20 @@ $("#upload").on("click", function () {
         
     
         myBlocks.forEach(function (block) {
+
             if (block.platforms.indexOf("facebook") > -1) {
                 facebook.update = true;
+                console.log("block option "+ block.option + " Image Id " +block.imageId)
                 switch (block.option) {
                     case "text":
                         facebook.message += block.content + "\n";
+                        console.log("facebook text "+ block.content);
                         break;
                     case "image":
                         facebook.images.push(block.imageId);
                         break;
                 }
+                console.log("text "+ facebook.message +" mongo ID " + facebook.images[0]);
             }
             if (block.platforms.indexOf("soundcloud") > -1) {
                 soundcloud.update = true;
@@ -66,12 +69,13 @@ $("#upload").on("click", function () {
             if (block.platforms.indexOf("youtube") > -1) {
                 youtube.update = true;
                 switch (block.option) {
-                    case "text":
-                        youtube.message += block.content + "\n";
-                        break;
-                    case "image":
-                        youtube.images.push(block.imageId);
-                        break;
+
+                    case "video":
+                        youtube.videoId = block.imageId;
+                        youtube.title = $('#youtube-title').val();
+                        youtube.description = $('#youtube-description').val();
+                        youtube.keywords = $('#youtube-keywords').val()
+                    break;
                 }
             }
             if (block.platforms.indexOf("twitter") > -1) {

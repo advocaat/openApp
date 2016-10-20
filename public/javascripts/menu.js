@@ -1,7 +1,9 @@
+var panelOpen = false;
+var menuOpen = false;
 (function (window) {
 
     'use strict';
-
+  
     function extend(a, b) {
         for (var key in b) {
             if (b.hasOwnProperty(key)) {
@@ -33,37 +35,49 @@
 
     Menu.prototype._init = function () {
         this.body = document.body;
-        this.wrapper = document.querySelector(this.options.wrapper);
-        this.mask = document.querySelector(this.options.maskId);
-        this.menu = document.querySelector('#c-menu--' + this.options.type);
-        // this.closeBtn = this.menu.querySelector('.c-menu__close');
+        this.wrapper = $(this.options.wrapper);
+        this.mask = $(this.options.maskId);
+        this.menu = $('#c-menu--' + this.options.type);
+        this.closeBtn = $('.c-menu__close');
         this.menuOpeners = document.querySelectorAll(this.options.menuOpenerClass);
-        this._initEvents();
+        // this._initEvents();
     };
 
     Menu.prototype._initEvents = function () {
 
+        // this.closeBtn.addEventListener('click', function(e) {
+        //     e.preventDefault();
+        //     this.close();
+        // }.bind(this));
+
         // Event for clicks on the mask.
-        this.mask.addEventListener('click', function (e) {
-            e.preventDefault();
-            this.close();
-        }.bind(this));
+        // this.closeBtn.on('click', function (e) {
+        //     if (panelOpen) {
+        //
+        //         e.preventDefault();
+        //         this.close();
+        //     }else{
+        //     //do nothing
+        //     }
+        //
+        // }.bind(this));
     };
 
     Menu.prototype.open = function () {
-        this.body.classList.add('has-active-menu');
-        this.wrapper.classList.add('has-' + this.options.type);
-        this.menu.classList.add('is-active');
-        this.mask.classList.add('is-active');
-        this.disableMenuOpeners();
+        $('body').addClass('has-active-menu');
+        this.wrapper.addClass('has-' + this.options.type);
+        this.menu.addClass('is-active');
+        // this.mask.addClass('is-active');
+       
+        // this.disableMenuOpeners();
     };
 
     Menu.prototype.close = function () {
-        this.body.classList.remove('has-active-menu');
-        this.wrapper.classList.remove('has-' + this.options.type);
-        this.menu.classList.remove('is-active');
-        this.mask.classList.remove('is-active');
-        this.enableMenuOpeners();
+       $('body').removeClass('has-active-menu');
+
+        this.wrapper.removeClass('has-' + this.options.type);
+        this.menu.removeClass('is-active');
+      
     };
 
     Menu.prototype.disableMenuOpeners = function () {
@@ -71,6 +85,18 @@
             item.disabled = true;
         });
     };
+
+//     $('#c-button--slide-right').on('click', function(){
+//
+//         if($('#c-menu--slide-right').classList.indexOf('is-active') < 0) {
+// //            $('body').removeClass('has-active-menu');
+// //            $('#c-menu--slide-right').removeClass('is-active');
+// //            $('#o-wrapper').removeClass('has-slide-right');
+// //            $('#c-mask').removeClass('is-active');
+//
+//             Menu.prototype.close();
+//         }
+//     })
 
     Menu.prototype.enableMenuOpeners = function () {
         each(this.menuOpeners, function (item) {

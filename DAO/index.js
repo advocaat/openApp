@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Post = require('../models/Post');
 var TrackStats = require('../models/TrackStats')
 mongoose.connect("mongodb://localhost/test");
-
+var ViewStats = require("../models/ViewStats")
 var functions = {};
 
 functions.uploadPost = function(postTitle, contentList ){
@@ -17,9 +17,7 @@ functions.uploadPost = function(postTitle, contentList ){
         }else{
             console.log("saved")
         }
-
     });
-
 }
 
 functions.insertTrackStats = function(trackStats){
@@ -46,20 +44,62 @@ functions.insertTrackStats = function(trackStats){
             }
         })
     })
-    
+}
+
+functions.insertRegionViews = function(views, titles){
+    ViewStats.update({id: "yt"}, {$set: {data: JSON.stringify(views), dataArray: views, titleArray: titles}}, {multi: false}, function(err, done){
+        if(err) {
+            console.log("yt err " + err);
+        }
+        if(!done){
+            var stat = new ViewStats();
+            stat.id = "yt";
+            stat.data = JSON.stringify(views);
+            stat.dataArray = views;
+            stat.titleArray = titles;
+            stat.save(function(err){
+                if(err){
+                    console.log("error saving "+  err);
+                }
+                else{
+                    console.log("yt saved data ");
+                }
+            })
+        }
+        else{
+            console.log("yt got data " + JSON.stringify(done));
+
+        }
+
+    })
     
 }
 
+functions.getYoutubeViews = function(callback){
+    ViewStats.findOne({id: "yt"}, function(err, docs){
+        if(err){
+            console.log("yt er" + err)
+        }
+        else{
+
+            callback(docs);
+        }
+    })
+}
 
 functions.pullStats = function(callback) {
+    var tStats;
     TrackStats.find({}, function(err, docs){
         if(err){
             console.log("pull stat error " + err )
         } else{
             console.log("docs: " + JSON.stringify(docs))
         }
-        callback(docs)
+        tStats = docs;
+        callback(docs);
     })
+
+
 }
 
 module.exports = functions;

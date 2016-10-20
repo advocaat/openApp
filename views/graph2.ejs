@@ -1,0 +1,207 @@
+<html>
+<head>
+    <title>Open App</title>
+    <meta charset="utf-8">
+    <% include partials/sources.ejs %>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src=".https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../javascripts/countryCodes.js"></script>
+    <style>
+        .header{
+            position: relative;
+        }
+        .red-italic{
+            color: red;
+            font-style: italic;
+            font-size: 18px;
+           position:absolute;
+            top: 95px;
+            width: 100%;
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div id="o-wrapper" class="o-wrapper">
+<div class="header">
+    <div class="c-buttons">
+        <div id="c-button--push-left" class="c-button"></div>
+        <img src="../images/toolkit.png" id="c-button--slide-right"  style="float: right;  margin-top: -5px;"/>
+    </div>
+
+    <div id="logo">
+        <h1 class="logos">open</h1>
+        <img class="logos" src="../images/open.png" style="width: 45px; ">
+        <h1 class="logos">records</h1>
+    </div>
+    </div>
+    <div id="container">
+        <p class="red-italic"></p>
+        <div id="graph1" style="display: none">
+            <div id="chartContainer" class="well"></div>
+            <script>
+                var sampleData = [<%- graphy %>];
+                console.log(JSON.stringify(sampleData));
+                var mapData = [<%- locationViews %>];
+                var titles = [<%- videoTitles %>];
+
+                if(!localStorage.videoIndex) {
+                    localStorage.setItem("videoIndex", 0);
+                }
+
+                function buildSelect() {
+                    var titleSelect = "<select id='titleSelect' class='form-control' style='margin-top: 100px;margin-left:10%;width: 80%;'>";
+                    for (var i = 0; i < titles[0].length -1; i++) {
+                        titleSelect += "<option value='" + i + "'>" + titles[0][i] + "</option>";
+                        console.log("titles " + titles[0][i]);
+                    }
+                    titleSelect += "</select>"
+                    console.log(titleSelect);
+                    return titleSelect;
+                }
+
+                function selectOption(){
+                    $('#titleSelect').val(localStorage.videoIndex);
+                    $('.red-italic').append($('#titleSelect option[value='+ localStorage.videoIndex +']').text());
+                }
+
+                function getCountryName(code){
+                    if(countryCodes[code]){
+                        return countryCodes[code]["name"];
+                    }else{
+                        return code;
+                    }
+
+                }
+                function codesToNames(md){
+                    var data = [];
+                    var i = 0;
+                    md.forEach(function(d){
+                        var temp = [];
+                        console.log(getCountryName(d[0]));
+                        temp.push(getCountryName(d[0]))
+                        temp.push(d[1]);
+                        if(i > 0) {
+                            data.push(temp);
+                        }else{
+                            data.push([d[0], d[1]]);
+                        }
+                        i++;
+                    })
+                    return data;
+                }
+            </script>
+
+        </div>
+        <div id="graph2"  style="margin-top: 160px;">
+
+
+            <div id="regions_div"></div>
+        </div>
+        <div id="graph3" class="well" style="display: none; margin-top: 60px;">
+            <div id="barchart_values" style="margin-top: -150px;"></div>
+        </div>
+    </div>
+
+
+
+
+</div>
+<!-- /o-wrapper -->
+
+<nav id="c-menu--push-left" class="c-menu c-menu--push-left">
+
+    <ul class="c-menu__items">
+        <li class="c-menu__item"><a href="/" class="c-menu__link">Home</a></li>
+        <li class="c-menu__item"><a href="../accounts" class="c-menu__link">Register</a></li>
+        <li class="c-menu__item"><a href="../upload" class="c-menu__link">Upload</a></li>
+        <li class="c-menu__item"><a href="../stats/graph3" class="c-menu__link">Stats</a></li>
+        <li class="c-menu__item"><a href="../tracker" class="c-menu__link">Piracy</a></li>
+    </ul>
+</nav>
+
+<div id="c-menu--slide-right" class="c-menu c-menu--slide-right">
+    <div class="row" style="width: 80%; margin: 80px auto; text-align: center; ">
+
+        <div class="col-xs-6"><a href="/stats/graph1" class="form-control">Soundcloud</a></div>
+        <div class="col-xs-6"><a href="/stats/graph2" class="form-control">Youtube Map</a></div>
+        <div class="col-xs-3" push-down></div>
+        <div class="col-xs-6 push-down"><a href="/stats/graph3" class="form-control">Youtube Chart</a></div>
+    </div>
+
+</div>
+
+
+<div id="c-mask" class="c-mask"></div>
+
+<script type="text/javascript" src="../javascripts/menu.js"></script>
+<script>
+    $('#c-menu--slide-right').append(buildSelect());
+
+    $('#titleSelect').on('change', function(e){
+        e.preventDefault();
+        console.log("val "+ parseInt($('#titleSelect').val()));
+        localStorage.setItem("videoIndex",  parseInt($('#titleSelect').val()));
+        location.reload();
+    })
+
+    var pushLeft = new Menu({
+        wrapper: '#o-wrapper',
+        type: 'push-left',
+        menuOpenerClass: '.c-button',
+        maskId: '#c-mask'
+    });
+
+    var slideRight = new Menu({
+        wrapper: '#o-wrapper',
+        type: 'slide-right',
+        menuOpenerClass: '.c-button',
+        maskId: '#c-mask'
+    });
+
+    var panelOpen  = false;
+    var menuOpen = false;
+
+    var pushLeftBtn = document.querySelector('#c-button--push-left');
+    pushLeftBtn.addEventListener('click', function (e) {
+
+        e.preventDefault();
+        if(menuOpen == false) {
+            pushLeft.open();
+            menuOpen = true;
+        }else{
+            pushLeft.close();
+            menuOpen = false;
+        }
+    });
+
+    var slideRightBtn = document.querySelector('#c-button--slide-right');
+    slideRightBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if(panelOpen == false) {
+
+            slideRight.open();
+            panelOpen = true;
+        }else{
+            slideRight.close();
+            panelOpen = false;
+        }
+
+    });
+
+</script>
+<script src="/javascripts/buildGraph.js" ></script>
+<script src="/javascripts/graphToggle.js" ></script>
+<script>
+    selectOption();
+</script>
+</body>
+</html>

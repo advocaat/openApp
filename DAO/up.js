@@ -49,6 +49,7 @@ functions.router = function(router) {
         busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
 
             console.log('got file', filename, mimetype, encoding);
+            console.log("mime "+ mimetype)
             var writeStream = gfs.createWriteStream({
                 _id: fileId,
                 filename: filename,
@@ -58,7 +59,7 @@ functions.router = function(router) {
             myMime = mimetype;
             file.pipe(writeStream);
         }).on('finish', function () {
-            if(myMime.toString().indexOf("audio") != -1){
+            if(myMime.toString().indexOf("audio") != -1 || myMime.toString().indexOf("video") != -1){
                 console.log("Audio");
                 uploads.audio = true;
                 uploads.added = fileId;
