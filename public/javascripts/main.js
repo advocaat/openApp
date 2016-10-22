@@ -13,7 +13,7 @@ var config = {
     value: "number",
     name: "name",
     inner: "drilldown",
-    transition: "fade-in",
+    transition: "bounce",
     transitionDuration: 200,
     donutRadius: 75
 };

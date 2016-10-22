@@ -2,6 +2,7 @@ $('input:checkbox').on("change", function(){
     console.log("hero");
     updatePlatforms();
     testAndSetSelectOptions(this);
+    setIcons();
 });
 
 

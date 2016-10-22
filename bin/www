@@ -18,7 +18,7 @@ var fs = require('fs');
 var twitter = require('../control/twitter');
 var removeFiles = require('../model/uploads/removeFiles');
 var youtube = require('../control/youtube/getStats')
-
+var validationCheck = require('../control/validationCheck');
 
 /**
  * Get port from environment and store in Express.
@@ -39,6 +39,9 @@ scheduler.scheduleDaily(6, serviceHandler.getTrackDataFromSoundcloud);
 /**
  * Listen on provided port, on all network interfaces.
  */
+scheduler.scheduleRegularAction(validationCheck, "soundcloud");
+scheduler.scheduleRegularAction(validationCheck, "youtube");
+
 var io = require('socket.io')(server);
 io.on('connection', function(socket){
 
@@ -58,7 +61,7 @@ setInterval(function(){
   socket.on('facebook', function(data){
     console.log(data.schedule);
     console.log("ids "+ data.images[0]);
-    if(typeof data.images[0] !== 'undefined' && typeof data.images[0] !== null && data.images.length > 1){
+    if(typeof data.images[0] !== 'undefined' && typeof data.images[0] !== null && data.images.length > 0){
       console.log("scheding fb photo")
 
       scheduler.scheduleFBPostWithPhoto(data.schedule, graph.postPhoto,data.message, data.images[0] );
@@ -85,6 +88,7 @@ setInterval(function(){
     scheduler.scheduleUploadYoutube(data.schedule, youtube.uploadVideo, data.videoId, data.title ,data.description, data.keywords)
   })
   
+ 
 
 
 

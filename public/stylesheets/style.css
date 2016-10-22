@@ -6,6 +6,7 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   max-height: 100%;
+  background-color: #efefff !important;
 }
 .clearBack {
   background:transparent;
@@ -113,10 +114,11 @@ height: 30px;
 }
 
 .radios + label{
-  position: relative;
+    position: relative;
 
-  top: -145px;
-  left: 695px;
+    top: 18px;
+    left: 708px;
+
 }
 
 .hoverClass{
@@ -130,7 +132,7 @@ height: 30px;
 }
 
 .feet{
-  background-color: #00B7FF;
+  background-color: grey;
   min-height: 24px;
   width:650px;
   margin: auto;
@@ -141,19 +143,26 @@ height: 30px;
 
 .blocko{
   display: block;
-  /*margin-bottom: 20px;*/
-  width: 750px;
+    /*margin-bottom: 20px;*/
+    width: 750px;
     border: 1px solid dimgrey;
-   padding-right: 40px;
-    background-color: lightyellow;
-
-
+    padding-right: 40px;
+    background-color: whitesmoke;
+    border-bottom-right-radius: 12px;
+    margin-top:3px;
+    padding-top:35px;
+    box-shadow: 10px 5px 5px #dedede;
 
 }
+.block:before{
+  height:12px;
+}
+
 .blocko textarea{
     border-left: 1px solid dimgrey;
     border-right: 1px solid dimgrey;
     border-top: 1px solid dimgrey;
+    /*margin-top: 12px;*/
 
 }
 body, html{
@@ -275,6 +284,8 @@ iframe{
     border: 1px solid grey;
     padding: 10px;
     border-radius: 4px;
+    background-color: #efefff;
+    margin-top: 15px;
 }
 .youtubeInputs{
   visibility: hidden;
@@ -531,11 +542,34 @@ h1.logos{
 
 }
 .c-menu__link:hover{
-    background-color: darkslategrey;
+    background-color: whitesmoke;
     text-decoration: none;
-    color: darkgray;
+    color: #3184a1;
 }
-/********************YOUTUBE UPLOAD*************************/
+#addContent{
+    margin-right: -40px;
+
+}
+#upload{
+    margin-left:-40px;
+    max-width: 80%;
+}
+#wrapPanel{
+    border: 1px solid dimgray;
+    border-radius:5px;
+    background-color: #efefff;
+    padding-top: 15px;
+}
+
+.icons-added span{
+  color: whitesmoke;
+  height: 20px;
+  width:20px;
+  margin-left:10px;
+  margin-top:4px;
+}
+
+
 #channel-image {
   width: 2em;
   height: 2em;
@@ -644,9 +678,16 @@ input[type="radio"] + label span {
 }
 
 input[type="radio"]:checked + label span{
-    background-color:greenyellow;
+  background: radial-gradient(greenyellow,mediumspringgreen, black);
     border: 1px solid black;
+
 }
+input[type="radio"] + label:hover span{
+  background: radial-gradient(lightgreen,darkgreen, black);
+
+}
+
+
 
 input[type="radio"] + label span,
 input[type="radio"]:checked + label span {

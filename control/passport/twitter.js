@@ -24,7 +24,18 @@ module.exports = function(passport) {
                         return done(err);
                     // if the user is found then log them in
                     if (user) {
-                        return done(null, user); // user found, return that user
+                        user.twitter.access_token = token;
+                        user.twitter.id = profile.id
+                        user.twitter.access_token_secret = tokenSecret;
+                        user.save(function(err, status){
+                            if(err){
+                                console.log(err)
+                            }else{
+                                console.log('update twitter '+ status);
+                                return done(null, user); // user found, return that userreturn done(null, user); // user found, return that user
+                            }
+                        })
+
                     } else {
                         // if there is no user, create them
                         var newUser = new User();

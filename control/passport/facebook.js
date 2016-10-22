@@ -6,23 +6,36 @@ module.exports = function (passport) {
     passport.use('facebook', new FacebookStrategy(conf.fb,
         function (accessToken, refreshToken, profile, done) {
             console.log("fb access-token: "+ accessToken);
-            graph.setToken(accessToken);
-            graph.getPageAccess()          
+            // graph.setToken(accessToken);
+            // graph.getPageAccess()          
             console.log('profile', profile);
             process.nextTick(function () {
-            User.findOne({'facebook.id': profile.id}, function (err, user) {
+            User.findOne({'local.username': "bob"}, function (err, user) {
                 if (err) {
-
+                    
                     return done(err);
                 }
                 
                 if (user) {
-                    console.log("found facebook");
-                    return done(null, user); // User found, return that user
+
+                    console.log("found facebook" + accessToken);
+                    user.local.facebook.access_token = accessToken;
+                    user.local.facebook.refresh_token = refreshToken;
+                    user.local.facebook.id = profile.id;
+                    user.save(function (err, status) {
+                        if (err) {
+                            throw err;
+                        }
+                        console.log("reauthfb "+ JSON.stringify(status));
+                        // If successful, return the new user
+                        return done(null, user);
+                    });
+
                 } else {
                     
                     // If there is no user found with that facebook id, create them
                     var newUser = new User();
+                    //console.log("fbrt" + JSON.stringify(JSON.parse(profile.body)));
                     // Set all of the facebook information in our user model
                     newUser.fb.id = profile.id; // Set the users facebook id
                     newUser.fb.access_token = accessToken; // We will save the token that facebook provides to the user

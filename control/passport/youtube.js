@@ -2,7 +2,7 @@ var config = require('../../model/config');
 
 var youtube = require('passport-youtube-v3');
 YoutubeStrategy = youtube.Strategy;
-
+var request = require('request');
 var GoogleStrategy = require('passport-google').Strategy;
 var User = require('../../models/User');
 
@@ -27,25 +27,34 @@ module.exports = function (passport) {
                         }
                         if (user) {
                             console.log("yt user found " + JSON.stringify(user));
-                            user.youtube.access_token = accessToken;
-                            user.youtube.refresh_token = refreshToken;
-                            user.save();
+                            getExpiresIn(accessToken, user, refreshToken, function(data){
+                                user.youtube.access_token = accessToken;
+                                user.youtube.refresh_token = refreshToken;
+                                user.youtube.expires_in = new Date().getTime() + (parseInt(data) * 1000);
+                                user.save();
 
-                            return done(null, user);
+                                return done(null, user);
+                            });
+
 
                         }else {
                             var newUser = new User;
+                            var rToken = refreshToken;
                             console.log("new yt user token");
                             newUser.youtube.id = profile.id;
-                            newUser.youtube.access_token = accessToken;
-                            newUser.youtube.refresh_token = refreshToken;
-                            newUser.save(function (err) {
-                                if (err) {
-                                    console.log("new yt user err 1");
-                                    throw err;
-                                }
-                                return done(null, newUser);
+                            getExpiresIn(accessToken, newUser, rToken, function(data){
+                                newUser.youtube.access_token = accessToken;
+                                newUser.youtube.refresh_token = rToken;
+                                newUser.youtube.expires_in = new Date().getTime() + (parseInt(data) * 1000);
+                                newUser.save(function (err) {
+                                    if (err) {
+                                        console.log("new yt user err 1");
+                                        throw err;
+                                    }
+                                    return done(null, newUser);
+                                })
                             })
+
                         }
                     });
 
@@ -53,4 +62,11 @@ module.exports = function (passport) {
 
             }
     ))
+}
+
+
+function getExpiresIn(accessToken,user, refreshToken, callback){
+    request({url: "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token="+ accessToken}, function(err, res, body){
+        callback(JSON.parse(res.body)["expires_in"]);
+    })
 }

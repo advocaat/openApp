@@ -110,4 +110,5 @@ $("#upload").on("click", function () {
         console.log("twitter message " + twitter.message);
         socket.emit("twitter", twitter);
     }
+    window.location.href ='/upload';
 })

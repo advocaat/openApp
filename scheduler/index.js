@@ -40,4 +40,15 @@ functions.scheduleUploadYoutube = function(date, job, mongoId, title ,descriptio
       return job(m,t,d,k);
    }.bind(null, mongoId, title,description, keywords ));
 }
+
+
+functions.scheduleRegularAction = function(job, service){
+   var rule = new scheduler.RecurrenceRule();
+   rule.minute = [0, new scheduler.Range(1, 59, 3)];
+
+   scheduler.scheduleJob(rule, function(s){
+      return job(s);
+   }.bind(null, service));
+}
+
 module.exports = functions;

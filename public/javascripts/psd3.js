@@ -22,14 +22,14 @@ psd3.Graph = function(config) {
             }
 
         },
-        // transition: "linear",
-        // transitionDuration: 1000,
+        transition: "linear",
+        transitionDuration: 1000,
         donutRadius: 0,
         gradient: false,
         colors: d3.scale.category20(),
         labelColor: "black",
-        // drilldownTransition: "linear",
-        // drilldownTransitionDuration: 0,
+        drilldownTransition: "linear",
+        drilldownTransitionDuration: 0,
         stroke: "white",
         strokeWidth: 2,
         highlightColor: "orange"
@@ -171,7 +171,7 @@ psd3.Pie.prototype.textTransform = function(d) {
 };
 
 psd3.Pie.prototype.textTitle = function(d) {
-        return d.data[_this.config.value];
+    return d.data[_this.config.value];
 };
 var drawCount = 0;
 psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, originalDatasetLength, innerRadius, outerRadius, radiusDelta, startAngle, endAngle, parentCentroid) {
@@ -189,19 +189,19 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
 
     psd3.Pie.prototype.textText = function(d) {
 
-          if(drawCount != 0) {
-              drawCount++;
+        if(drawCount != 0) {
+            drawCount++;
 
-             if(_this.config.label(d).indexOf("JANUARY") >= 0){
-                  return _this.config.label(d).split(" ")[0] + " "+_this.config.label(d).split(" ")[1];
-              }else if(_this.config.label(d).indexOf("(") >= 0) {
-                  return _this.config.label(d).split("(")[0];
-              }else if(_this.config.label(d).indexOf(":") >= 0){
-                  return _this.config.label(d).split(":")[0];
-              }else{
-                  return _this.config.label(d).split(" ")[0] + " "+ _this.config.label(d).split(" ")[1];
-              }
-          }else{
+            if(_this.config.label(d).indexOf("JANUARY") >= 0){
+                return _this.config.label(d).split(" ")[0] + " "+_this.config.label(d).split(" ")[1];
+            }else if(_this.config.label(d).indexOf("(") >= 0) {
+                return _this.config.label(d).split("(")[0];
+            }else if(_this.config.label(d).indexOf(":") >= 0){
+                return _this.config.label(d).split(":")[0];
+            }else{
+                return _this.config.label(d).split(" ")[0] + " "+ _this.config.label(d).split(" ")[1];
+            }
+        }else{
             drawCount++;
         }
 
@@ -304,52 +304,52 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
     var radius = 300;
 
     var texts = arcs.append("text")
-                .attr("x", function () {
-                    return arc.centroid[0];
-                })
-                .attr("y", function () {
-                    return arc.centroid[1];
-                })
-                // .attr("transform", function (d) {
-                //     var pos = arc.centroid(d);
-                //     return "translate(" + (pos[0] + (.5 - (pos[0] < 0)) * radius) + "," + (pos[1] * 2) + ")";
-                // })
-                .transition()
-                .ease(_this.config.transition)
-                .duration(_this.config.transitionDuration)
-                .delay(_this.config.transitionDuration * (_this.arcIndex - 1))
-                // .attr("transform", function (d) {
-                //     var a = [];
-                //     a[0] = arc.centroid(d)[0] - parentCentroid[0];
-                //     a[1] = arc.centroid(d)[1] - parentCentroid[1];
-                //     return "translate(" + a + ")";
-                // })
-                .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ") rotate(" + computeTextRotation(d) + ")"; })
-                .attr("dy", ".35em")
-                .attr("dx", "6")
-                .attr("text-anchor", "middle")
-                .text(_this.textText)
-                .style("fill", _this.config.labelColor)
-                .attr("title", _this.textTitle);
+        .attr("x", function () {
+            return arc.centroid[0];
+        })
+        .attr("y", function () {
+            return arc.centroid[1];
+        })
+        // .attr("transform", function (d) {
+        //     var pos = arc.centroid(d);
+        //     return "translate(" + (pos[0] + (.5 - (pos[0] < 0)) * radius) + "," + (pos[1] * 2) + ")";
+        // })
+        .transition()
+        .ease(_this.config.transition)
+        .duration(_this.config.transitionDuration)
+        .delay(_this.config.transitionDuration * (_this.arcIndex - 1))
+        // .attr("transform", function (d) {
+        //     var a = [];
+        //     a[0] = arc.centroid(d)[0] - parentCentroid[0];
+        //     a[1] = arc.centroid(d)[1] - parentCentroid[1];
+        //     return "translate(" + a + ")";
+        // })
+        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ") rotate(" + computeTextRotation(d) + ")"; })
+        .attr("dy", ".35em")
+        .attr("dx", "6")
+        .attr("text-anchor", "middle")
+        .text(_this.textText)
+        .style("fill", _this.config.labelColor)
+        .attr("title", _this.textTitle);
 
 
 
-        //console.log("paths.data() = " + paths.data());
-        for (var j = 0; j < dataset.length; j++) {
-            //console.log("dataset[j] = " + dataset[j]);
-            //console.log("paths.data()[j] = " + paths.data()[j]);
-            if (dataset[j][_this.config.inner] !== undefined) {
-                _this.draw(svg, totalRadius, dataset[j][_this.config.inner], originalDataset,
-                    originalDatasetLength, innerRadius + radiusDelta, outerRadius + radiusDelta,
-                    radiusDelta, paths.data()[j].startAngle, paths.data()[j].endAngle, arc.centroid(paths.data()[j]));
-            }
+    //console.log("paths.data() = " + paths.data());
+    for (var j = 0; j < dataset.length; j++) {
+        //console.log("dataset[j] = " + dataset[j]);
+        //console.log("paths.data()[j] = " + paths.data()[j]);
+        if (dataset[j][_this.config.inner] !== undefined) {
+            _this.draw(svg, totalRadius, dataset[j][_this.config.inner], originalDataset,
+                originalDatasetLength, innerRadius + radiusDelta, outerRadius + radiusDelta,
+                radiusDelta, paths.data()[j].startAngle, paths.data()[j].endAngle, arc.centroid(paths.data()[j]));
+        }
     }
 
 
 };
 function computeTextRotation(d) {
-        var ang = (180 / Math.PI * (d.startAngle + d.endAngle) / 2 - 90);
-        return (ang > 90) ? 180 + ang : ang;
+    var ang = (180 / Math.PI * (d.startAngle + d.endAngle) / 2 - 90);
+    return (ang > 90) ? 180 + ang : ang;
 
 }
 texts.attr("transform", function(d) {

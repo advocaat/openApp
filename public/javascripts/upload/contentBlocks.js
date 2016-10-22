@@ -9,7 +9,8 @@ $("#addContent").on("click", function () {
 
 function createContentBlock() {
     var myId = "contentBlock" + blocks;
-    var elem = $('<div class="blocko panel-body"><textarea id="' + myId + '" class="form-control" rows="5" style="width: 650px;" ></textarea><footer class="feet" height="10" ></footer></div>').insertBefore("#endContent");
+    var footId = "foot" + blocks;
+    var elem = $('<div class="blocko panel-body"><textarea id="' + myId + '" class="form-control" rows="5" style="width: 650px;" ></textarea><footer class="feet" id="' + footId + '" height="10" ></footer></div>').insertBefore("#endContent");
 // <div class="panel panel-default ui-widget-header"><div class="panel-heading"></div>
     var block = {
         id: myId,
@@ -87,15 +88,19 @@ function createContentBlock() {
 
 
 function refreshChangedListener() {
+
     $(".blocko input:radio").off();
+
     $(".blocko input:radio").on("change", function () {
         console.log("change");
         $("#blockType").children().remove("optgroup");
+
         $('input:checkbox').removeAttr('checked');
         if (this.checked) {
             //focus on this radios related textarea
             $(this).prev().prev().focus();
             var index = getIndexFromId(this.id);
+            $('#foot'+index).innerHTML = '';
             myBlocks.forEach(function (block) {
                 block.editing = false;
             })
@@ -104,23 +109,77 @@ function refreshChangedListener() {
             $('.soundcloudInputs').css("max-height", "0px");
             $('.youtubeInputs').css("visibility", "hidden");
             $('.youtubeInputs').css("max-height", "0px");
+            var id = '#foot'+ index;
+
+
+
+
+
             myBlocks[index].platforms.forEach(function (platform) {
-                $('.platform').each(function () {
-                    if (platform == this.name) {
-                        $(this).click();
-                        testAndSetSelectOptions(this);
-                    }
 
-                })
 
-                $("#blockType").val(myBlocks[index].optionValue);
+
+
+                    $('.platform').each(function () {
+                        if (platform == this.name) {
+
+                                $(this).click();
+                                console.log("asd" + this.name);
+
+
+
+
+                                // $(id).innerHTML = '<span class="fa fa-'+ this.name.toString()+ '"></span>';
+                                testAndSetSelectOptions(this);
+                            }
+
+
+                    })
+
+                    $("#blockType").val(myBlocks[index].optionValue);
 
             })
         }
     });
 }
 
+var jo = {};
+var clickCount = 0;
 
+function setIcons(){
+
+
+    for(var i = 0; i < myBlocks.length; i++) {
+        var added = [];
+        var id = '#foot'+ i;
+        if(clickCount > 0 || i == 0){
+            $(myBlocks[i].jo).remove();
+            clickCount--;
+        }
+        myBlocks[i].jo = $('<div/>', {
+            html: function(){
+                var sb = '';
+                for(var j = 0; j < myBlocks[i].platforms.length; j++){
+
+                    if(added.indexOf(myBlocks[i].platforms[j]) == -1) {
+                        clickCount++;
+                        sb += '<span class="fa fa-' + myBlocks[i].platforms[j] + '"></span>';
+                        added.push(myBlocks[i].platforms[j])
+                    }
+                }
+                return sb;
+            },
+            id: id.replace('#foo', '')
+        }).addClass('icons-added').appendTo(id);
+
+        // if(added.length > 0){
+        //     $(id).child.remove();
+        //
+        // }
+
+    }
+
+}
 
 function addTypeOptions(name) {
     console.log("type add " + name);
@@ -223,8 +282,8 @@ $('#blockType').change(function () {
             block.optionValue = $('#blockType option:selected').val();
             if ($('#blockType option:selected').text() == "Image") {
                 block.option = "image";
-                $('.blocko #' + block.id).css({"visibility": "hidden"});
-                $('.blocko #' + block.id).rows = "2";
+                // $('.blocko #' + block.id).css({"visibility": "hidden"});
+                // $('.blocko #' + block.id).rows = "2";
                 //$('.blocko  #' + block.id).parent().css({"min-height": "400px", "min-width": "600px"});
             }else if($('#blockType option:selected').text() == "Audio") {
                 block.option = "audio";
