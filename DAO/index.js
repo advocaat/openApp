@@ -47,33 +47,68 @@ functions.insertTrackStats = function(trackStats){
 }
 
 functions.insertRegionViews = function(views, titles){
-    ViewStats.update({id: "yt"}, {$set: {data: JSON.stringify(views), dataArray: views, titleArray: titles}}, {multi: false}, function(err, done){
-        if(err) {
-            console.log("yt err " + err);
-        }
-        if(!done){
-            var stat = new ViewStats();
-            stat.id = "yt";
-            stat.data = JSON.stringify(views);
-            stat.dataArray = views;
-            stat.titleArray = titles;
-            stat.save(function(err){
+        ViewStats.findOne({id: "yt"}, function(err, doc){
+            doc.data = JSON.stringify(views);
+            doc.dataArray = views;
+            doc.titleArray = titles;
+            doc.save(function(err, status){
                 if(err){
-                    console.log("error saving "+  err);
-                }
-                else{
-                    console.log("yt saved data ");
+                    console.log(err);
+                }else{
+                    console.log("modified "+ status);
                 }
             })
-        }
-        else{
-            console.log("yt got data " + JSON.stringify(done));
+        })
+
+    // {
+    //         $set: {
+    //             data: JSON.stringify(views),
+    //             dataArray: views,
+    //             titleArray: titles
+    //         }
+    //     }, {multi: false}, function (err, done) {
+    //         if (err) {
+    //             console.log("yt err " + err);
+    //         }
+    //         if (done.nModified < 1) {
+    //             var stat = new ViewStats();
+    //             stat.id = "yt";
+    //             stat.data = JSON.stringify(views);
+    //             stat.dataArray = views;
+    //             stat.titleArray = titles;
+    //             stat.save(function (err, status) {
+    //                 if (err) {
+    //                     console.log("error saving " + err);
+    //                 }
+    //                 else {
+    //                     console.log("yt saved data " + status);
+    //                 }
+    //             })
+    //         }
+    //         else {
+    //             console.log("yt got data " + JSON.stringify(done));
+    //
+    //         }
 
         }
-
-    })
+    // }catch(err){
+    //     console.log(err);
+    //     var stat = new ViewStats();
+    //     stat.id = "yt";
+    //     stat.data = JSON.stringify(views);
+    //     stat.dataArray = views;
+    //     stat.titleArray = titles;
+    //     stat.save(function (err) {
+    //         if (err) {
+    //             console.log("error saving " + err);
+    //         }
+    //         else {
+    //             console.log("yt saved data ");
+    //         }
+    //     })
+    // }
     
-}
+
 
 functions.getYoutubeViews = function(callback){
     ViewStats.findOne({id: "yt"}, function(err, docs){
@@ -81,7 +116,6 @@ functions.getYoutubeViews = function(callback){
             console.log("yt er" + err)
         }
         else{
-
             callback(docs);
         }
     })

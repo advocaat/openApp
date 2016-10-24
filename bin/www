@@ -41,6 +41,8 @@ scheduler.scheduleDaily(6, serviceHandler.getTrackDataFromSoundcloud);
  */
 scheduler.scheduleRegularAction(validationCheck, "soundcloud");
 scheduler.scheduleRegularAction(validationCheck, "youtube");
+//serviceHandler.getViewDataFromYoutube();
+scheduler.scheduleDaily(17, serviceHandler.getViewDataFromYoutube);
 
 var io = require('socket.io')(server);
 io.on('connection', function(socket){

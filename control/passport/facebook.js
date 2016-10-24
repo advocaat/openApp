@@ -2,6 +2,7 @@ var conf = require('../../model/config');
 var graph = require('../facebook/graph');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../../models/User');
+var reauthFB = require('../../control/passport/reauthentication/facebook')
 module.exports = function (passport) {
     passport.use('facebook', new FacebookStrategy(conf.fb,
         function (accessToken, refreshToken, profile, done) {
@@ -27,7 +28,7 @@ module.exports = function (passport) {
                             throw err;
                         }
                         console.log("reauthfb "+ JSON.stringify(status));
-                        // If successful, return the new user
+                        reauthFB(accessToken);
                         return done(null, user);
                     });
 
@@ -46,6 +47,7 @@ module.exports = function (passport) {
                         if (err) {
                             throw err;
                         }
+                        reauthFB(accessToken);
                         // If successful, return the new user
                         return done(null, newUser);
                     });

@@ -31,9 +31,16 @@ module.exports = function (passport) {
                                 user.youtube.access_token = accessToken;
                                 user.youtube.refresh_token = refreshToken;
                                 user.youtube.expires_in = new Date().getTime() + (parseInt(data) * 1000);
-                                user.save();
+                                user.save(function(err, status){
+                                    if(err){
+                                        console.log("error "+ err)
+                                    }else{
+                                        console.log("saved youtube user "+ JSON.stringify(status));
+                                        return done(null, user);
+                                    }
+                                });
 
-                                return done(null, user);
+
                             });
 
 

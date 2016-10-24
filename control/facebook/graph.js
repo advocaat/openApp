@@ -81,23 +81,27 @@ functions.postPageWithPhoto = function(message, photoId){
 var albumId;
    var albumUploadString = "";
    functions.getAlbums = function(callback){
-       functions.getPageAccess();
+       
         // graph.batch({
         //     method: "GET",
         //     relative_url: "me/accounts"//
         //
         // })
-       console.log("url "+ urls.facebook_photo);
-        var albums = graph.get(urls.facebook_photo, function(err, res){
+       try {
+           console.log("url " + urls.facebook_photo);
+           var albums = graph.get(urls.facebook_photo, function (err, res) {
 
-            console.log("data " + JSON.stringify(res.data[0]));
-            albumId = res.data[0].id;
+               console.log("data " + JSON.stringify(res.data[0]));
+               albumId = res.data[0].id;
 
-            albumUploadString += albumId.toString();
-            albumUploadString += "/photos?access_token=";
-            albumUploadString += urls.facebook_photo.split("=")[1].toString();
-            console.log("ljdnh "+ albumUploadString);
-        });
+               albumUploadString += albumId.toString();
+               albumUploadString += "/photos?access_token=";
+               albumUploadString += urls.facebook_photo.split("=")[1].toString();
+               console.log("ljdnh " + albumUploadString);
+           });
+       }catch(err){
+           console.log('err '+ err);
+       }
 
             callback();
    }

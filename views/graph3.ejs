@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src=".https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -60,17 +59,22 @@
             if(!localStorage.videoIndex) {
                 localStorage.setItem("videoIndex", 0);
             }
+
             var topOffset = 160;
             var graphHeight;
             google.charts.load('current', {'packages': ['geochart','corechart']});
-            google.charts.setOnLoadCallback(drawChart);
-
+            try {
+                google.charts.setOnLoadCallback(drawChart);
+            }catch(err){
+                console.log(err);
+            }
              $('#graph1').css('display', 'none');
              $('#graphOption1').css('visibility', 'hidden')
              $('#graph2').css('display', 'none');
              $('#graphOption2').css('visibility', 'hidden')
              $('#graph3').css('display', 'block');
              $('#graphOption3').css('visibility', 'visible')
+
 
              function appendRole(md){
                  var data = [];
@@ -140,8 +144,13 @@
                 return data;
 
              }
-             var formattedData = appendRole(mapData[0][localStorage.videoIndex]);
 
+//            try {
+            console.log(JSON.stringify("map "+ localStorage.videoIndex))
+               var  formattedData = appendRole(mapData[0][localStorage.videoIndex]);
+//            }catch(err){
+//                formattedData = appendRole(mapData[0][0])
+//            }
 
              function drawChart() {
                  var data = google.visualization.arrayToDataTable(formattedData);
@@ -214,7 +223,7 @@
             });
             function buildSelect() {
                 var titleSelect = "<select id='titleSelect' class='form-control' style='margin-top: 100px;margin-left:10%;width: 80%;'>";
-                for (var i = 0; i < titles[0].length -1; i++) {
+                for (var i = 0; i < titles[0].length -3; i++) {
                     titleSelect += "<option value='" + i + "'>" + titles[0][i] + "</option>";
                     console.log("titles " + titles[0][i]);
                 }
@@ -257,7 +266,11 @@
     </div>
     </div>
 <script>
-    $('#c-menu--slide-right').append(buildSelect());
+    try {
+        $('#c-menu--slide-right').append(buildSelect());
+    }catch(err){
+        console.log(err);
+    }
     $('#titleSelect').on('change', function(e){
         e.preventDefault();
         console.log("val "+ parseInt($('#titleSelect').val()));
@@ -290,8 +303,5 @@
     selectOption();
     setFromTop();
 </script>
-
-
-
 </body>
 </html>

@@ -144,8 +144,11 @@
 
 <script type="text/javascript" src="../javascripts/menu.js"></script>
 <script>
-    $('#c-menu--slide-right').append(buildSelect());
-
+    try {
+        $('#c-menu--slide-right').append(buildSelect());
+    }catch(err){
+        console.log(err);
+    }
     $('#titleSelect').on('change', function(e){
         e.preventDefault();
         console.log("val "+ parseInt($('#titleSelect').val()));

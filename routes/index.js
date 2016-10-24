@@ -133,10 +133,19 @@ module.exports = function (passport) {
                 break;
             case "graph2":
                 DAO.getYoutubeViews(function(data){
+                    var titles;
+                    var views;
+                    if(data){
+                        titles = JSON.stringify(data.titleArray);
+                        views = JSON.stringify(data.dataArray);
+                    }else{
+                        titles = [];
+                        views = [];
+                    }
                     res.render('graph2',{
                         graphy: "[]",
-                        videoTitles: JSON.stringify(data.titleArray),
-                        locationViews: JSON.stringify(data.dataArray),
+                        videoTitles: titles,
+                        locationViews: views,
                         pageName: 'Statistics',
                         pageDescription: 'Statistics generated from services'
                     })
@@ -145,10 +154,18 @@ module.exports = function (passport) {
 
             case "graph3":
                 DAO.getYoutubeViews(function(data){
+                    var titles, views;
+                    if(data){
+                       titles = JSON.stringify(data.titleArray);
+                        views = JSON.stringify(data.dataArray);
+                    }else{
+                       titles = [];
+                       views = [];
+                    }
                     res.render('graph3',{
                         graphy: "[]",
-                        videoTitles: JSON.stringify(data.titleArray),
-                        locationViews: JSON.stringify(data.dataArray),
+                        videoTitles: titles,
+                        locationViews: views,
                         pageName: 'Statistics',
                         pageDescription: 'Statistics generated from services'
                     })
@@ -222,15 +239,17 @@ router.get('/cunt', function(req, res){
     //upsc.uploadTrack("track", "5718a039f7cf2c0c2cf8ccf5","listy","sljkhdjs","disco");
     //});
     try {
-        // ytfuncs.getVideoIDs(function(data, titles){
-        //     DAO.insertRegionViews(data, titles);
-        //
-        // })
-        User.findOne({'local.username': 'bob'}, function(err, data){
-            console.log("rtoken " + data.local.facebook.access_token);
+        User.findOne({'youtube.id': 'UC4QDIq_Yw_jJG0ZhwcIzDWw'}, function(err, data){
+            ytfuncs.getVideoIDs(function(data, titles){
+                DAO.insertRegionViews(data, titles);
+                // videoList = [];
+                // videoTitleList = [];
+            })
+        // User.findOne({'soundcloud.id': 'bob'}, function(err, data){
+            console.log("rtoken " + data.youtube.access_token);
             // reauth(data.soundcloud.refresh_token);
             // reauthYt(data.youtube.refresh_token);
-            reauthFb(data.local.facebook.access_token);
+            // reauthFb(data.local.facebook.access_token);
         })
 
 

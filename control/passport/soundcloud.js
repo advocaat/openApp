@@ -41,7 +41,7 @@ module.exports = function (passport) {
                         newUser.soundcloud.id = profile.id; // Set the users facebook id
                         newUser.soundcloud.access_token = accessToken; // We will save the token that facebook provides to the user
                         newUser.soundcloud.refresh_token = refreshToken;
-                        newUser.soundcloud.expires_in = new Date.getTime() + (parseInt(JSON.parse(profile._raw.toString())["upload_seconds_left"]) * 1000);
+                        newUser.soundcloud.expires_in = new Date().getTime() + (parseInt(JSON.parse(profile._raw.toString())["upload_seconds_left"]) * 1000) || null;
                         newUser.save(function (err) {
                             if (err) {
                                 throw err;
